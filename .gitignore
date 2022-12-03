@@ -1,0 +1,24 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# Development
+/.idea
+
+# MacOS
+/**/.DS_Store
+
+# Dependencies
+/node_modules
+/yarn-error.log
+
+# testing
+/coverage
+
+# builds
+/build
+/src/tailwind.output.css
+
+# Enviroment
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
