@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import {login} from '../api'
 import InputString from '../components/InputString';
 
-import {useUpdateIsAuthorized, useUpdateToken} from '../state/user/hooks';
+import {useAuthorize} from '../state/user/hooks';
 import {useNavigate} from 'react-router-dom';
 
 
@@ -12,18 +12,16 @@ export default function AuthorizationPage() {
     const [passwordInput, setPasswordInput] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
-    const updateIsAuthorized = useUpdateIsAuthorized();
-    const updateToken = useUpdateToken();
-
+    const authorize = useAuthorize();
     const navigate = useNavigate();
 
 
     const onButtonClick = () => {
         login(loginInput, passwordInput)
-            .then(({token}) => {
+            .then(({data: token}) => {
+                //console.log(token);
                 setErrorMessage('');
-                updateIsAuthorized(true);
-                updateToken(token);
+                authorize(token);
                 navigate('/events');
             })
             .catch((error) => {

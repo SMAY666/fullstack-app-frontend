@@ -1,26 +1,27 @@
 import {useCallback} from 'react';
 
 import {useAppDispatch, useAppSelector} from '../hooks';
-import {updateIsAuthorized, updateToken} from './reducer';
+import {authorize, deauthorize} from './reducer';
 
 
 export function useIsAuthorized(): boolean {
-    return useAppSelector((state) => state.user.isAuthorized);
+    return useAppSelector((state) => !!state.user.token);
 }
 
-export function useUpdateIsAuthorized() {
+export function useAuthorize() {
     const dispatch = useAppDispatch();
-    return useCallback((isAuthorized: boolean) => {
-        dispatch(updateIsAuthorized({isAuthorized}));
+    return useCallback((token: string) => {
+        dispatch(authorize({token}));
     }, [dispatch]);
 }
+
 export function useToken(): string {
     return useAppSelector((state) => state.user.token);
 }
 
-export function useUpdateToken() {
+export function useDeauthorize() {
     const dispatch = useAppDispatch();
-    return useCallback((token: string) => {
-        dispatch(updateToken({token}));
+    return useCallback(() => {
+        dispatch(deauthorize());
     }, [dispatch]);
 }
