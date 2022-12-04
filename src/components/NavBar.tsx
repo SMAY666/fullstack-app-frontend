@@ -1,8 +1,17 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+import {useDeauthorize} from '../state/user/hooks';
 
 
 export default function NavBar() {
+    const deauthorize = useDeauthorize();
+    const navigate = useNavigate();
+
+    const onButtonClick = () => {
+        deauthorize();
+        navigate('/login');
+    }
+
     return (
         <div className="relative m-0 bg-slate-100 w-[250px] h-[100vh] border-r-1">
             <header className="pt-[20px] mx-[50px] container font-bold text-blue-400">ООО "Автопилот"</header>
@@ -43,7 +52,7 @@ export default function NavBar() {
                         <p className="pl-[10px] ml-[50px] -mt-[25px]">Сазонов Матвей</p>
                     </Link>
                 </div>
-                <button className="pl-[10px] mt-[20px] hover:text-red-600 hover:font-bold duration-300">Выйти</button>
+                <button className="pl-[10px] mt-[20px] hover:text-red-600 hover:font-bold duration-300" onClick={onButtonClick}>Выйти</button>
             </div>
         </div>
     )

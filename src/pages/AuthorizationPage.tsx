@@ -19,7 +19,6 @@ export default function AuthorizationPage() {
     const onButtonClick = () => {
         login(loginInput, passwordInput)
             .then(({data: token}) => {
-                //console.log(token);
                 setErrorMessage('');
                 authorize(token);
                 navigate('/events');
