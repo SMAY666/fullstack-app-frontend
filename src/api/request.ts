@@ -12,7 +12,8 @@ export function privateRequest(method: 'GET' | 'POST' | 'DELETE', url: string, t
         baseURL: SERVER_URL,
         url,
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
         },
         data
     });

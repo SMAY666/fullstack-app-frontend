@@ -21,7 +21,7 @@ export default function AuthorizationPage() {
             .then(({data: token}) => {
                 setErrorMessage('');
                 authorize(token);
-                navigate('/events');
+                navigate('/');
             })
             .catch((error) => {
                 setErrorMessage(error.message);

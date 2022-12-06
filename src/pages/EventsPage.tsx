@@ -4,10 +4,11 @@ import {useToken} from '../state/user/hooks';
 import InputString from '../components/InputString';
 import {useSetModal} from '../state/application/hooks';
 import {ModalType} from '../state/application/types';
+import EventsTable from '../components/EventsTable';
 
 
 export default function EventsPage() {
-    let eventsArr = [];
+    const [events, setEvents] = useState([]);
 
     const [errorMessage, setErrorMessage] = useState('');
     const [searchInput, setSearchInput] = useState('');
@@ -17,8 +18,8 @@ export default function EventsPage() {
 
     useEffect(() => {
         fetchEvents(token)
-            .then((events) => {
-                eventsArr = events;
+            .then(({data: events}) => {
+                setEvents(events);
                 setErrorMessage('');
             })
             .catch((error) => {
@@ -27,13 +28,16 @@ export default function EventsPage() {
     }, []);
 
     return (
-        <div>
+        <main className="flex flex-col">
             <header>
                 <div className="">
                     <button className="py-[5px] px-[10px] border-2 rounded-md hover:text-blue-400 hover:border-blue-400 duration-300" onClick={() => setModal(ModalType.CREATE_EVENT)}>Создать событие</button>
-                    <InputString className="px-[10px] ml-[100px] w-[500px] border-b-2 outline-0 focus:border-blue-400 duration-300" type="text" placeholder="Поиск..." state={searchInput} setState={setSearchInput}></InputString>
+                    <InputString className="px-[10px] ml-[100px] w-[500px] border-b-2 outline-0 focus:border-blue-400 duration-300" type="text" placeholder="Поиск..." state={searchInput} setState={setSearchInput}/>
                 </div>
             </header>
-        </div>
+            <div className="mx-auto">
+                {events.length === 0 ? <span className="text-red-700">Событий нет</span> : <EventsTable events={events}/>}
+            </div>
+        </main>
     );
 }

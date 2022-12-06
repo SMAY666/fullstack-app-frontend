@@ -2,7 +2,7 @@ import React from 'react';
 import {useCurrentModal} from '../../state/application/hooks';
 import {ModalType} from '../../state/application/types';
 import CreateEventModal from './CreateEventModal';
-import UpdateEventModal from './UpdateEventModal';
+import ChangeEventModal from './ChangeEventModal';
 
 
 export default function Modal() {
@@ -14,7 +14,7 @@ export default function Modal() {
         case ModalType.CREATE_EVENT:
             return <CreateEventModal/>;
         case ModalType.UPDATE_EVENT:
-            return <UpdateEventModal/>;
+            return <ChangeEventModal/>;
         default:
             return null;
     }

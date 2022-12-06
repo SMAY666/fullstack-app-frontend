@@ -22,9 +22,8 @@ function Routing() {
     return (
         <Routes>
             <Route element={<MasterLayout/>}>
-                <Route path='/' element={<MainPage/>}/>
-                <Route path='/events' element={<EventsPage/>}/>
-                <Route path="*" element={<Navigate to='/events'/>}/>
+                <Route path='/' element={<EventsPage/>}/>
+                <Route path="*" element={<Navigate to='/'/>}/>
             </Route>
         </Routes>
     );
