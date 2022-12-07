@@ -29,13 +29,13 @@ export default function EventsPage() {
 
     return (
         <main className="flex flex-col">
-            <header>
+            <header className="left-[250px]fixed bg-white drop-shadow-lg w-full">
                 <div className="">
                     <button className="py-[5px] px-[10px] border-2 rounded-md hover:text-blue-400 hover:border-blue-400 duration-300" onClick={() => setModal(ModalType.CREATE_EVENT)}>Создать событие</button>
-                    <InputString className="px-[10px] ml-[100px] w-[500px] border-b-2 outline-0 focus:border-blue-400 duration-300" type="text" placeholder="Поиск..." state={searchInput} setState={setSearchInput}/>
+                    <InputString className="px-[10px] ml-[20px] w-[500px] border-b-2 outline-0 focus:border-blue-400 duration-300" type="text" placeholder="Поиск..." state={searchInput} setState={setSearchInput}/>
                 </div>
             </header>
-            <div className="mx-auto">
+            <div className="mx-auto mt-[50px]">
                 {events.length === 0 ? <span className="text-red-700">Событий нет</span> : <EventsTable events={events}/>}
             </div>
         </main>
