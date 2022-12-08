@@ -21,7 +21,7 @@ export default function EventsTable({events}: Props) {
         <table>
             <tbody>
             <tr>
-                {titles.map((title, index) => <th key={index}>{title}</th>)}
+                {titles.map((title, index) => <th className="px-[10px]" key={index}>{title}</th>)}
             </tr>
             {events.map((event, index) => <Event key={index} event={event}/>)}
             </tbody>
