@@ -1,5 +1,5 @@
 export type OrganizationEvent = {
-    id: number;
+    id: string;
     title: string;
     description: string;
     dateOfTheBegining: string;
