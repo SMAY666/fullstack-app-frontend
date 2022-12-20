@@ -1,8 +1,8 @@
 import {useCallback} from 'react';
 
 import {useAppDispatch, useAppSelector} from '../hooks';
-import {updateModal} from './reducer';
-import {ModalType} from './types';
+import {updateModal, updateNotification} from './reducer';
+import {ModalType, NotificationType} from './types';
 
 
 export function useCurrentModal(): ModalType {
@@ -14,4 +14,12 @@ export function useSetModal() {
     return useCallback((modal: ModalType) => {
         dispatch(updateModal({modal}));
     }, [dispatch]);
+}
+
+export function useSetNotification() {
+    const dispatch = useAppDispatch();
+    return useCallback((notification: NotificationType) => {
+        dispatch(updateNotification({notification}));
+    }, [dispatch]);
+
 }

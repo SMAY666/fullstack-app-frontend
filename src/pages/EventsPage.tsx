@@ -6,6 +6,7 @@ import {useSetModal} from '../state/application/hooks';
 import {ModalType} from '../state/application/types';
 import EventsTable from '../components/EventsTable';
 import {AiOutlineFilter} from 'react-icons/ai';
+import {Notifications} from 'react-push-notification';
 
 
 export default function EventsPage() {
@@ -43,8 +44,9 @@ export default function EventsPage() {
 
     return (
         <main className="flex flex-col">
+            <Notifications/>
             <header className="px-[50px] py-[8px] top-0 fixed bg-white drop-shadow-lg rounded-2xl">
-                <div className="flex">
+                <div className="flex mx-auto">
                     <button
                         className="py-[5px] px-[10px] border-2 rounded-md hover:text-blue-400 hover:border-blue-400 duration-300"
                         onClick={() => setModal(ModalType.CREATE_EVENT)}>Создать событие
