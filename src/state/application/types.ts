@@ -1,6 +1,6 @@
 export type ApplicationState = {
     modal: ModalType;
-    notification: NotificationType
+    notifications: NotificationData[];
 };
 
 export enum ModalType {
@@ -10,8 +10,14 @@ export enum ModalType {
 }
 
 export enum NotificationType {
-    NONE,
+    INFORMATION,
     SUCCESS,
     WARNING,
-    DEBUG
+    ERROR
 }
+
+export type NotificationData = {
+    type: NotificationType;
+    title: string;
+    context: string;
+};

@@ -1,11 +1,11 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-import {ApplicationState, ModalType, NotificationType} from './types';
+import {ApplicationState, ModalType} from './types';
 
 
 const initialState: ApplicationState = {
     modal: ModalType.NONE,
-    notification: NotificationType.NONE
+    notifications: []
 };
 
 const applicationSlice = createSlice({
@@ -16,7 +16,7 @@ const applicationSlice = createSlice({
             state.modal = action.payload.modal;
         },
         updateNotification(state, action) {
-            state.notification = action.payload.notification;
+            state.notifications = action.payload.notifications;
         }
     }
 });
