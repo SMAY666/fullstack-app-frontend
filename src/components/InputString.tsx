@@ -2,24 +2,28 @@ import React from 'react';
 
 
 type Props = React.InputHTMLAttributes<HTMLInputElement> & {
+    label?: string;
     state: string;
     setState: any;
-    additionalOnChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 
-export default function InputString({state, setState, additionalOnChange, ...props}: Props) {
+export default function InputString({label, state, setState, onChange, ...props}: Props) {
     return (
-        <input
-            {...props}
-            value={state}
-            onChange={(event) => {
-                setState(event.target.value);
+        <>
+            {label && <label htmlFor={props.id}>{label}</label>}
+            <input
+                value={state}
+                onChange={(event) => {
+                    setState(event.target.value);
 
-                if (additionalOnChange) {
-                    additionalOnChange(event);
-                }
-            }}
-        />
+                    if (onChange) {
+                        onChange(event);
+                    }
+                }}
+                {...props}
+            />
+        </>
     )
 }

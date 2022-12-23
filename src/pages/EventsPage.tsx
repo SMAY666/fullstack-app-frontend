@@ -19,17 +19,6 @@ export default function EventsPage() {
     const setModal = useSetModal();
 
     useEffect(() => {
-        fetchEvents(token)
-            .then(({data: events}) => {
-                setEvents(events);
-                setErrorMessage('');
-            })
-            .catch((error) => {
-                setErrorMessage(error.message);
-            })
-    }, []);
-
-    const onChangeInput = () => {
         searchEvents(token, searchInput)
             .then(({data: events}) => {
                 setEvents(events);
@@ -37,9 +26,9 @@ export default function EventsPage() {
             })
             .catch((error) => {
                 setErrorMessage(error.message);
-                console.log(error);
             })
-    }
+    }, [searchInput]);
+
 
     return (
         <main className="flex flex-col">
@@ -52,7 +41,6 @@ export default function EventsPage() {
                     <InputString
                         className="px-[10px] ml-[20px] w-[500px] border-b-2 outline-0 focus:border-blue-400 duration-300"
                         type="text" placeholder="Поиск..." state={searchInput} setState={setSearchInput}
-                        additionalOnChange={onChangeInput}
                     />
                     <button className="ml-[20px]"><AiOutlineFilter
                         className="text-[20px] hover:text-blue-400 duration-300"/></button>
