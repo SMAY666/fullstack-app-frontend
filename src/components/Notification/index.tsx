@@ -14,18 +14,18 @@ export default function Notification() {
     }
 
     return (
-        <div className="fixed flex top-0 right-0 w-full h-full">
+        <div className="fixed flex-col top-0 right-0">
             {
-                notifications.map((notificationData, index) => {
+                notifications.map((notificationData) => {
                     switch (notificationData.type) {
                         case NotificationType.INFORMATION:
-                            return <InformationNotification key={index} data={notificationData}/>
+                            return <InformationNotification key={notificationData.id} data={notificationData}/>
                         case NotificationType.SUCCESS:
-                            return <SuccessNotification key={index} data={notificationData}/>
+                            return <SuccessNotification key={notificationData.id} data={notificationData}/>
                         case NotificationType.WARNING:
-                            return <WarningNotification key={index} data={notificationData}/>
+                            return <WarningNotification key={notificationData.id} data={notificationData}/>
                         case NotificationType.ERROR:
-                            return <ErrorNotification key={index} data={notificationData}/>
+                            return <ErrorNotification key={notificationData.id} data={notificationData}/>
                         default:
                             return null;
                     }

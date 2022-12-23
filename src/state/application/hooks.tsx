@@ -1,8 +1,8 @@
 import {useCallback} from 'react';
 
 import {useAppDispatch, useAppSelector} from '../hooks';
-import {updateModal, updateNotification} from './reducer';
-import {ModalType, NotificationData} from './types';
+import {updateModal, addNotification, deleteNotification} from './reducer';
+import {ModalType, NotificationData, NotificationType} from './types';
 
 
 export function useCurrentModal(): ModalType {
@@ -22,18 +22,14 @@ export function useSetModal() {
 
 export function useAddNotification() {
     const dispatch = useAppDispatch();
-    const notifications = useNotifications();
-    return useCallback((notification: NotificationData) => {
-        const newNotifications = Array.from(notifications);
-        newNotifications.push(notification);
-        dispatch(updateNotification({notifications: newNotifications}));
+    return useCallback((type: NotificationType, title: string, context: string) => {
+        dispatch(addNotification({type, title, context}));
     }, [dispatch]);
 }
 
-export function useRemoveNotification() {
+export function useDeleteNotification() {
     const dispatch = useAppDispatch();
-    const notifications = useNotifications();
-    return useCallback((notification: NotificationData) => {
-        dispatch(updateNotification({notifications: notifications.filter((item) => item !== notification)}));
+    return useCallback((id: number) => {
+        dispatch(deleteNotification({id}));
     }, [dispatch]);
 }

@@ -24,9 +24,9 @@ export default function App() {
 
 function Routing() {
     const addNotification = useAddNotification();
-    setInterval(() => {
-        addNotification({type: NotificationType.SUCCESS, title: "Тест", context: "Контекст"});
-    }, 10000);
+
+        addNotification(NotificationType.SUCCESS, "Title","Контекст");
+        addNotification(NotificationType.ERROR, "Title","Контекст");
     return (
         <Routes>
             <Route element={<MasterLayout/>}>
