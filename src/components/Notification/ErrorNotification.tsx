@@ -7,12 +7,13 @@ import BaseNotification from './BaseNotification';
 
 type Props = {
     data: NotificationData;
+    index: number;
 };
 
 
-export default function ErrorNotification({data}: Props) {
+export default function ErrorNotification({data, index}: Props) {
     return (
-        <BaseNotification name={<><AiFillCloseCircle className="text-green-700"/>Ошибка</>} data={data}>
+        <BaseNotification borderColor="border-error" textColor="text-error" name={<><AiFillCloseCircle/>Ошибка</>} data={data} index={index}>
 
         </BaseNotification>
     )

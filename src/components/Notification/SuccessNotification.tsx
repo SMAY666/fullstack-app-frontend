@@ -7,12 +7,13 @@ import BaseNotification from './BaseNotification';
 
 type Props = {
     data: NotificationData;
+    index: number;
 };
 
 
-export default function SuccessNotification({data}: Props) {
+export default function SuccessNotification({data, index}: Props) {
     return (
-        <BaseNotification name={<><AiOutlineInfoCircle className="text-green-700"/>Успех</>} data={data}>
+        <BaseNotification borderColor="border-success" textColor="text-success" name={<><AiOutlineInfoCircle/>Успех</>} data={data} index={index}>
 
         </BaseNotification>
     )

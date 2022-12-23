@@ -6,12 +6,13 @@ import BaseNotification from './BaseNotification';
 
 type Props = {
     data: NotificationData;
+    index: number;
 };
 
 
-export default function WarningNotification({data}: Props) {
+export default function WarningNotification({data, index}: Props) {
     return (
-        <BaseNotification name={<><AiOutlineWarning className="text-green-700"/>Внимание</>} data={data}>
+        <BaseNotification borderColor="border-warning" textColor="text-warning" name={<><AiOutlineWarning/>Внимание</>} data={data} index={index}>
 
         </BaseNotification>
     )

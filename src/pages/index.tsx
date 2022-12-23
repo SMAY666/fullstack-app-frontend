@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import MasterLayout from './layouts/MasterLayout';
 import {useIsAuthorized} from '../state/user/hooks';
@@ -24,9 +24,13 @@ export default function App() {
 
 function Routing() {
     const addNotification = useAddNotification();
+    useEffect(() => {
+        addNotification(NotificationType.INFORMATION, "Информация","Контекст");
+        addNotification(NotificationType.SUCCESS, "Успех","Контекст");
+        addNotification(NotificationType.WARNING, "Внимание","Контекст");
+        addNotification(NotificationType.ERROR, "Ошибка","Контекст");
+    }, []);
 
-        addNotification(NotificationType.SUCCESS, "Title","Контекст");
-        addNotification(NotificationType.ERROR, "Title","Контекст");
     return (
         <Routes>
             <Route element={<MasterLayout/>}>

@@ -5,18 +5,21 @@ import {useDeleteNotification} from '../../state/application/hooks';
 
 
 type Props = {
+    borderColor: string;
+    textColor: string;
     name: React.ReactNode;
     data: NotificationData;
+    index: number;
     children: React.ReactNode;
 };
 
 
-export default function BaseNotification({name, data, children}: Props) {
+export default function BaseNotification({borderColor, textColor, name, data, index, children}: Props) {
     const removeNotification = useDeleteNotification();
-    setInterval(() => removeNotification(data.id), 5000);
+    setInterval(() => removeNotification(data.id), 10000 + 250 * index);
     return (
         <div
-            className="pb-[20px] pt-[10px] px-[10px] drop-shadow-2xl mx-auto border-2 rounded-md border-blue-400 bg-slate-50 w-[300px]">
+            className={`pb-[20px] pt-[10px] px-[10px] drop-shadow-2xl mx-auto mb-[10px] border-2 rounded-md ${borderColor} bg-slate-50 w-[300px]`}>
             <div className="flex">
                 <button
                     className="float-right mr-[20px] mt-[5px] border-1 w-[10px] h-[10px] text-blue-400 hover:text-red-700 duration-300"
@@ -24,7 +27,7 @@ export default function BaseNotification({name, data, children}: Props) {
                 >
                     <AiOutlineCloseCircle/>
                 </button>
-                <div className="flex text-blue-400 font-bold">
+                <div className={`flex ${textColor} font-bold`}>
                     {name}: {data.title}
                 </div>
 

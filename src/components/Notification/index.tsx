@@ -16,20 +16,20 @@ export default function Notification() {
     return (
         <div className="fixed flex-col top-0 right-0">
             {
-                notifications.map((notificationData) => {
+                notifications.map((notificationData, index) => {
                     switch (notificationData.type) {
                         case NotificationType.INFORMATION:
-                            return <InformationNotification key={notificationData.id} data={notificationData}/>
+                            return <InformationNotification key={notificationData.id} data={notificationData} index={index}/>
                         case NotificationType.SUCCESS:
-                            return <SuccessNotification key={notificationData.id} data={notificationData}/>
+                            return <SuccessNotification key={notificationData.id} data={notificationData} index={index}/>
                         case NotificationType.WARNING:
-                            return <WarningNotification key={notificationData.id} data={notificationData}/>
+                            return <WarningNotification key={notificationData.id} data={notificationData} index={index}/>
                         case NotificationType.ERROR:
-                            return <ErrorNotification key={notificationData.id} data={notificationData}/>
+                            return <ErrorNotification key={notificationData.id} data={notificationData} index={index}/>
                         default:
                             return null;
                     }
-                })
+                }).reverse()
             }
         </div>
     )
