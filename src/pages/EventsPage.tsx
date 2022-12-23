@@ -6,7 +6,6 @@ import {useSetModal} from '../state/application/hooks';
 import {ModalType} from '../state/application/types';
 import EventsTable from '../components/EventsTable';
 import {AiOutlineFilter} from 'react-icons/ai';
-import {Notifications} from 'react-push-notification';
 
 
 export default function EventsPage() {
@@ -44,7 +43,6 @@ export default function EventsPage() {
 
     return (
         <main className="flex flex-col">
-            <Notifications/>
             <header className="px-[50px] py-[8px] top-0 fixed bg-white drop-shadow-lg rounded-2xl">
                 <div className="flex mx-auto">
                     <button
