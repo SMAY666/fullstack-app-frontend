@@ -10,8 +10,8 @@ module.exports = {
             },
             colors: {
                 'info': '#999999',
-                'success': '#00FF00',
-                'warning': '#FFFF00',
+                'success': '#09A837',
+                'warning': '#FBC42D',
                 'error': '#ff0000'
             }
         },

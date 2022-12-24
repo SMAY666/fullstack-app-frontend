@@ -13,7 +13,7 @@ type Props = {
 
 export default function InformationNotification({data, index}: Props) {
     return (
-        <BaseNotification borderColor="border-info" textColor="text-info" name={<><AiOutlineInfoCircle/>Информация</>} data={data} index={index}>
+        <BaseNotification borderColor="border-info" textColor="text-info" name={<><AiOutlineInfoCircle className="mr-[5px]"/>Информация</>} data={data} index={index}>
 
         </BaseNotification>
     )

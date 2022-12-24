@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import BaseModal from './BaseModal';
-import InputString from '../InputString';
-import {createEvents} from '../../api/events';
-import {useToken} from '../../state/user/hooks';
-import {useSetModal} from '../../state/application/hooks';
-import {ModalType} from '../../state/application/types';
+import BaseModal from '../BaseModal';
+import InputString from '../../InputString';
+import {createEvents} from '../../../api/events';
+import {useToken} from '../../../state/user/hooks';
+import {useSetModal} from '../../../state/application/hooks';
+import {ModalType} from '../../../state/application/types';
 
 
 export default function CreateEventModal() {

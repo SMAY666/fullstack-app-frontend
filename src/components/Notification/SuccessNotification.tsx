@@ -13,7 +13,7 @@ type Props = {
 
 export default function SuccessNotification({data, index}: Props) {
     return (
-        <BaseNotification borderColor="border-success" textColor="text-success" name={<><AiOutlineInfoCircle/>Успех</>} data={data} index={index}>
+        <BaseNotification borderColor="border-success" textColor="text-success" name={<><AiOutlineInfoCircle className="mr-[5px]"/>Успех</>} data={data} index={index}>
 
         </BaseNotification>
     )

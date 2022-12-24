@@ -12,7 +12,7 @@ type Props = {
 
 export default function WarningNotification({data, index}: Props) {
     return (
-        <BaseNotification borderColor="border-warning" textColor="text-warning" name={<><AiOutlineWarning/>Внимание</>} data={data} index={index}>
+        <BaseNotification borderColor="border-warning" textColor="text-warning" name={<><AiOutlineWarning className="mr-[5px]"/>Внимание</>} data={data} index={index}>
 
         </BaseNotification>
     )
