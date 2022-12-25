@@ -16,8 +16,8 @@ export default function CreateEventModal() {
 
     const [titleInput, setTitleInput] = useState('');
     const [descriptionInput, setDescriptionInput] = useState('');
-    const [dateOfBeginInput, setDateOfBeginInput] = useState('');
-    const [dateOfEndInput, setDateOfEndInput] = useState('');
+    const [dateBeginInput, setDateOfBeginInput] = useState('');
+    const [dateEndInput, setDateOfEndInput] = useState('');
 
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -29,14 +29,14 @@ export default function CreateEventModal() {
     const changeMustUpdateEvents = useChangeMustUpdateEvents();
 
     const onButtonClick = () => {
-        createEvents(token, titleInput, descriptionInput, dateOfBeginInput, dateOfEndInput)
+        createEvents(token, titleInput, descriptionInput, (new Date(dateBeginInput)).getTime(), (new Date(dateEndInput)).getTime())
             .then(() => {
                 setErrorMessage('');
                 setModal(ModalType.NONE);
                 addNotification(
                     NotificationType.SUCCESS,
                     'Событие создано',
-                    `${titleInput}<br>${descriptionInput}<br>Дата окончания: ${dateOfEndInput}`
+                    `${titleInput}<br>${descriptionInput}<br>Дата окончания: ${dateEndInput}`
                 );
                 changeMustUpdateEvents(true);
             })
@@ -91,7 +91,7 @@ export default function CreateEventModal() {
                     outline-0
                     focus:border-blue-400
                     focus:opacity-100
-                    duration-300" type="date" placeholder="Дата начала события" state={dateOfBeginInput} setState={setDateOfBeginInput}/>
+                    duration-300" type="date" placeholder="Дата начала события" state={dateBeginInput} setState={setDateOfBeginInput}/>
                 </p>
                 <p className="mb-[10px]">
                     Дата окончания:
@@ -106,7 +106,7 @@ export default function CreateEventModal() {
                     outline-0
                     focus:border-blue-400
                     focus:opacity-100
-                    duration-300" type="date" placeholder="Дата окончания события" state={dateOfEndInput} setState={setDateOfEndInput}/>
+                    duration-300" type="date" placeholder="Дата окончания события" state={dateEndInput} setState={setDateOfEndInput}/>
                 </p>
             </div>
             <p>{errorMessage.length > 0 ? <span className="text-red-700">{errorMessage}</span> : null}</p>

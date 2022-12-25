@@ -41,6 +41,6 @@ export function useDeleteNotification() {
 export function useChangeMustUpdateEvents() {
     const dispatch = useAppDispatch();
     return useCallback((mastUpdateEvents: boolean) => {
-        dispatch(changeMustUpdateEvents(mastUpdateEvents));
+        dispatch(changeMustUpdateEvents({mastUpdateEvents}));
     }, [dispatch]);
 }

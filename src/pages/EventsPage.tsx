@@ -22,7 +22,6 @@ export default function EventsPage() {
     const changeMustUpdateEvents = useChangeMustUpdateEvents();
 
     useEffect(() => {
-        console.log(mustUpdateEvents);
         if (mustUpdateEvents) {
             changeMustUpdateEvents(false);
         }
@@ -56,7 +55,8 @@ export default function EventsPage() {
             </header>
             <div className="mx-auto mt-[50px] mb-[50px]">
                 {events.length === 0 ? <span className="text-red-700">Событий нет</span> :
-                    errorMessage.length > 0 ? <span className="text-red-700">{errorMessage}</span> : <EventsTable events={events}/>}
+                    errorMessage.length > 0 ? <span className="text-red-700">{errorMessage}</span> :
+                        <EventsTable events={events}/>}
             </div>
         </main>
     );

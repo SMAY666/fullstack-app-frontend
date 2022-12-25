@@ -2,7 +2,7 @@ export type OrganizationEvent = {
     id: string;
     title: string;
     description: string;
-    dateOfTheBegining: string;
-    dateOfTheEnd: string;
+    dateBegin: string;
+    dateEnd: string;
     status: 'Open' | 'Close' | 'In Process';
 }
