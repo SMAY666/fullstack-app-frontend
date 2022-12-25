@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {fetchEvents, searchEvents} from '../api/events';
 import {useToken} from '../state/user/hooks';
 import InputString from '../components/InputString';
-import {useSetModal} from '../state/application/hooks';
+import {useChangeMustUpdateEvents, useMustUpdateEvents, useSetModal} from '../state/application/hooks';
 import {ModalType} from '../state/application/types';
 import EventsTable from '../components/EventsTable';
 import {AiOutlineFilter} from 'react-icons/ai';
@@ -18,7 +18,15 @@ export default function EventsPage() {
     const token = useToken();
     const setModal = useSetModal();
 
+    const mustUpdateEvents = useMustUpdateEvents();
+    const changeMustUpdateEvents = useChangeMustUpdateEvents();
+
     useEffect(() => {
+        console.log(mustUpdateEvents);
+        if (mustUpdateEvents) {
+            changeMustUpdateEvents(false);
+        }
+
         searchEvents(token, searchInput)
             .then(({data: events}) => {
                 setEvents(events);
@@ -27,7 +35,7 @@ export default function EventsPage() {
             .catch((error) => {
                 setErrorMessage(error.message);
             })
-    }, [searchInput]);
+    }, [searchInput, mustUpdateEvents]);
 
 
     return (

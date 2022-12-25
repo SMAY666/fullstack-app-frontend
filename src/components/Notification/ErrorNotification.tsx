@@ -13,7 +13,7 @@ type Props = {
 
 export default function ErrorNotification({data, index}: Props) {
     return (
-        <BaseNotification borderColor="border-error" textColor="text-error" name={<><AiFillCloseCircle className="mr-[5px]"/>Ошибка</>} data={data} index={index}>
+        <BaseNotification borderColor="border-error" textColor="text-error" name={<AiFillCloseCircle className="mr-[5px]"/>} data={data} index={index}>
 
         </BaseNotification>
     )

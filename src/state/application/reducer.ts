@@ -6,7 +6,8 @@ import {ApplicationState, ModalType} from './types';
 const initialState: ApplicationState = {
     modal: ModalType.NONE,
     notifications: [],
-    nextId: 0
+    nextId: 0,
+    mastUpdateEvents: false
 };
 
 const applicationSlice = createSlice({
@@ -27,10 +28,13 @@ const applicationSlice = createSlice({
         },
         deleteNotification(state, action) {
             state.notifications = state.notifications.filter((item) => item.id !== action.payload.id);
+        },
+        changeMustUpdateEvents(state, action) {
+            state.mastUpdateEvents = action.payload.mastUpdateEvents;
         }
     }
 });
 
 
-export const {updateModal, addNotification, deleteNotification} = applicationSlice.actions;
+export const {updateModal, addNotification, deleteNotification, changeMustUpdateEvents} = applicationSlice.actions;
 export default applicationSlice.reducer;

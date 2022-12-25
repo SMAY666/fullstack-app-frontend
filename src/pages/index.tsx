@@ -1,11 +1,10 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import MasterLayout from './layouts/MasterLayout';
 import {useIsAuthorized} from '../state/user/hooks';
 import Modal from '../components/Modal';
 import Notification from '../components/Notification';
-import {useAddNotification} from '../state/application/hooks';
-import {NotificationType} from '../state/application/types';
+
 
 const MainPage = React.lazy(() => import ('./MainPage'));
 const EventsPage = React.lazy(() => import ('./EventsPage'));
@@ -23,14 +22,6 @@ export default function App() {
 }
 
 function Routing() {
-    const addNotification = useAddNotification();
-    useEffect(() => {
-        addNotification(NotificationType.INFORMATION, "Информация","Контекст");
-        addNotification(NotificationType.SUCCESS, "Успех","Контекст");
-        addNotification(NotificationType.WARNING, "Внимание","Контекст");
-        addNotification(NotificationType.ERROR, "Ошибка","Контекст");
-    }, []);
-
     return (
         <Routes>
             <Route element={<MasterLayout/>}>

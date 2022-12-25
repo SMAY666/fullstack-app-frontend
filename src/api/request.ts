@@ -1,5 +1,5 @@
 import axios, {AxiosRequestConfig} from 'axios';
-import {SERVER_URL} from '../consts/server';
+import {SERVER_URL} from '../constants/server';
 
 
 function request(config: AxiosRequestConfig<any>): Promise<any> {

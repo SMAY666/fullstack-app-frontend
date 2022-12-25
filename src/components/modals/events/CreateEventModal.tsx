@@ -3,8 +3,13 @@ import BaseModal from '../BaseModal';
 import InputString from '../../InputString';
 import {createEvents} from '../../../api/events';
 import {useToken} from '../../../state/user/hooks';
-import {useSetModal} from '../../../state/application/hooks';
-import {ModalType} from '../../../state/application/types';
+import {
+    useAddNotification,
+    useChangeMustUpdateEvents,
+    useMustUpdateEvents,
+    useSetModal
+} from '../../../state/application/hooks';
+import {ModalType, NotificationType} from '../../../state/application/types';
 
 
 export default function CreateEventModal() {
@@ -20,12 +25,20 @@ export default function CreateEventModal() {
 
     const setModal = useSetModal();
 
+    const addNotification = useAddNotification();
+    const changeMustUpdateEvents = useChangeMustUpdateEvents();
+
     const onButtonClick = () => {
         createEvents(token, titleInput, descriptionInput, dateOfBeginInput, dateOfEndInput)
             .then(() => {
                 setErrorMessage('');
                 setModal(ModalType.NONE);
-                window.location.reload();
+                addNotification(
+                    NotificationType.SUCCESS,
+                    'Событие создано',
+                    `${titleInput}<br>${descriptionInput}<br>Дата окончания: ${dateOfEndInput}`
+                );
+                changeMustUpdateEvents(true);
             })
             .catch((error) => {
                 setErrorMessage(error.message);
