@@ -15,7 +15,6 @@
 
 # builds
 /build
-/src/tailwind.output.css
 
 # Enviroment
 .env.local
