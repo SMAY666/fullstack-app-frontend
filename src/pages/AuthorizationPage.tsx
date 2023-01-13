@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import {login} from '../api'
 import InputString from '../components/InputString';
 
-import {useAuthorize} from '../state/user/hooks';
+import {useAuthorize, useExpirationTime, useIsAuthorized} from '../state/user/hooks';
 import {useNavigate} from 'react-router-dom';
 
 
@@ -15,12 +15,10 @@ export default function AuthorizationPage() {
     const authorize = useAuthorize();
     const navigate = useNavigate();
 
-
     const onButtonClick = () => {
         login(loginInput, passwordInput)
-            .then(({data: token}) => {
-                setErrorMessage('');
-                authorize(token);
+            .then(({data: {token, expirationTime}}) => {
+                authorize(token, expirationTime);
                 navigate('/');
             })
             .catch((error) => {
