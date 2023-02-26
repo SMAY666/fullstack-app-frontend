@@ -1,8 +1,9 @@
 import axios, {AxiosRequestConfig} from 'axios';
+
 import {SERVER_URL} from '../constants/server';
 
 
-function request(config: AxiosRequestConfig<any>): Promise<any> {
+function request(config: AxiosRequestConfig): Promise<any> {
     return axios.request(config);
 }
 
@@ -12,10 +13,10 @@ export function privateRequest(method: 'GET' | 'POST' | 'DELETE', url: string, t
         baseURL: SERVER_URL,
         url,
         headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
         },
-        data
+        data,
     });
 }
 
@@ -24,6 +25,6 @@ export function publicRequest(method: 'GET' | 'POST' | 'DELETE', url: string, da
         method,
         baseURL: SERVER_URL,
         url,
-        data
+        data,
     });
 }

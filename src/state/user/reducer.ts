@@ -5,7 +5,7 @@ import {UserState} from './types';
 
 const initialState: UserState = {
     token: '',
-    expirationTime: 0
+    expirationTime: 0,
 };
 
 const userSlice = createSlice({
@@ -17,8 +17,8 @@ const userSlice = createSlice({
         },
         updateExpirationTime(state, action) {
             state.expirationTime = action.payload.expirationTime;
-        }
-    }
+        },
+    },
 });
 
 

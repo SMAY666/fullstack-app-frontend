@@ -1,4 +1,4 @@
-import React, { Component, ErrorInfo, PropsWithChildren } from 'react';
+import React, {Component, ErrorInfo, PropsWithChildren} from 'react';
 
 
 type ErrorBoundaryState = {
@@ -7,19 +7,19 @@ type ErrorBoundaryState = {
 };
 
 
-export default class ErrorBoundary extends Component<PropsWithChildren<unknown>, ErrorBoundaryState> {
-    constructor(props: PropsWithChildren<unknown>) {
+export default class ErrorBoundary extends Component<PropsWithChildren, ErrorBoundaryState> {
+    constructor(props: PropsWithChildren) {
         super(props);
         this.state = {
             error: null,
-            errorInfo: null
+            errorInfo: null,
         };
     }
 
     componentDidCatch(error: Error, errorInfo: ErrorInfo) {
         this.setState({
             error: error,
-            errorInfo: errorInfo
+            errorInfo: errorInfo,
         });
     }
 

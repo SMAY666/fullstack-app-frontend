@@ -1,7 +1,8 @@
 import React from 'react';
+
 import {useCurrentModal} from '../state/application/hooks';
 import {ModalType} from '../state/application/types';
-import {CreateEventModal, ChangeEventModal} from './modals';
+import {ChangeEventModal, CreateEventModal} from './modals';
 
 
 export default function Modal() {

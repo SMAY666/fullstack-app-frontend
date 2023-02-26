@@ -7,7 +7,7 @@ const initialState: ApplicationState = {
     modal: ModalType.NONE,
     notifications: [],
     nextId: 0,
-    mastUpdateEvents: false
+    mastUpdateEvents: false,
 };
 
 const applicationSlice = createSlice({
@@ -22,7 +22,7 @@ const applicationSlice = createSlice({
                 id: state.nextId,
                 type: action.payload.type,
                 title: action.payload.title,
-                context: action.payload.context
+                context: action.payload.context,
             });
             state.nextId++;
         },
@@ -31,8 +31,8 @@ const applicationSlice = createSlice({
         },
         changeMustUpdateEvents(state, action) {
             state.mastUpdateEvents = action.payload.mastUpdateEvents;
-        }
-    }
+        },
+    },
 });
 
 

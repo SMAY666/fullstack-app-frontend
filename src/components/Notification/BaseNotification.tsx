@@ -1,7 +1,8 @@
-import React from 'react'
+import React from 'react';
 import {AiOutlineCloseCircle} from 'react-icons/ai';
-import {NotificationData} from '../../state/application/types';
+
 import {useDeleteNotification} from '../../state/application/hooks';
+import {NotificationData} from '../../state/application/types';
 
 
 type Props = {
@@ -30,7 +31,7 @@ export default function BaseNotification({borderColor, textColor, name, data, in
                     <AiOutlineCloseCircle/>
                 </button>
             </div>
-            {/*TODO: Уязвимость XSS*/}
+            {/* TODO: Уязвимость XSS*/}
             <div dangerouslySetInnerHTML={{__html: data.context}}></div>
             {children}
         </div>

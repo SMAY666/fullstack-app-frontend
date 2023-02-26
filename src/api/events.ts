@@ -10,13 +10,13 @@ export function createEvents(
     title: string,
     description: string,
     dateBegin: number,
-    dateEnd: number
+    dateEnd: number,
 ): Promise<any> {
     return privateRequest('POST', '/api/events/create', `${token}`, {
         title,
         description,
         dateBegin,
-        dateEnd
+        dateEnd,
     });
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
+
 import {useDeauthorize} from '../state/user/hooks';
 
 type LinkData = {
@@ -22,21 +23,19 @@ export default function NavBar() {
     const onButtonClick = () => {
         deauthorize();
         navigate('/login');
-    }
+    };
 
     return (
         <div className="relative top-0 left-0 bg-slate-100 w-[250px] h-[100vh] border-r-1">
-            <header className="pt-[20px] mx-[50px] container font-bold text-blue-400">ООО "Автопилот"</header>
+            <header className="pt-[20px] mx-[50px] container font-bold text-blue-400">ООО &ldquo;Автопилот&rdqou;</header>
             <div className="container mt-[50px]">
-                {links.map((link, index) => {
-                    return (
-                        <Link key={index} to={link.to}>
-                            <div className={location.pathname === link.to ? "h-[50px] px-[10px] text-white bg-blue-300 font-bold" : "" + "h-[50px] px-[10px] hover:bg-blue-300 hover:cursor-pointer hover:text-white hover:font-bold duration-300"}>
-                                <p className="pt-[10px]">{link.name}</p>
-                            </div>
-                        </Link>
-                    )
-                })}
+                {links.map((link, index) => (
+                    <Link key={index} to={link.to}>
+                        <div className={location.pathname === link.to ? 'h-[50px] px-[10px] text-white bg-blue-300 font-bold' : '' + 'h-[50px] px-[10px] hover:bg-blue-300 hover:cursor-pointer hover:text-white hover:font-bold duration-300'}>
+                            <p className="pt-[10px]">{link.name}</p>
+                        </div>
+                    </Link>
+                ))}
 
             </div>
             <div className="absolute bottom-[50px]">
@@ -53,5 +52,5 @@ export default function NavBar() {
                 <button className="pl-[10px] mt-[20px] hover:text-red-600 hover:font-bold duration-300" onClick={onButtonClick}>Выйти</button>
             </div>
         </div>
-    )
+    );
 }

@@ -1,15 +1,12 @@
 import React, {useState} from 'react';
-import BaseModal from '../BaseModal';
-import InputString from '../../InputString';
+
 import {createEvents} from '../../../api/events';
-import {useToken} from '../../../state/user/hooks';
-import {
-    useAddNotification,
-    useChangeMustUpdateEvents,
-    useMustUpdateEvents,
-    useSetModal
-} from '../../../state/application/hooks';
+import {useAddNotification, useChangeMustUpdateEvents, useSetModal} from '../../../state/application/hooks';
 import {ModalType, NotificationType} from '../../../state/application/types';
+import {useToken} from '../../../state/user/hooks';
+import {getErrorMessage} from '../../../utils/error';
+import InputString from '../../InputString';
+import BaseModal from '../BaseModal';
 
 
 export default function CreateEventModal() {
@@ -36,14 +33,12 @@ export default function CreateEventModal() {
                 addNotification(
                     NotificationType.SUCCESS,
                     'Событие создано',
-                    `${titleInput}<br>${descriptionInput}<br>Дата окончания: ${dateEndInput}`
+                    `${titleInput}<br>${descriptionInput}<br>Дата окончания: ${dateEndInput}`,
                 );
                 changeMustUpdateEvents(true);
             })
-            .catch((error) => {
-                setErrorMessage(error.message);
-            })
-    }
+            .catch((error) => setErrorMessage(getErrorMessage(error)));
+    };
 
     return (
         <BaseModal name="Создать событие">

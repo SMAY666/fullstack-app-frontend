@@ -15,5 +15,5 @@ export default function WarningNotification({data, index}: Props) {
         <BaseNotification borderColor="border-warning" textColor="text-warning" name={<><AiOutlineWarning className="mr-[5px]"/>Внимание</>} data={data} index={index}>
 
         </BaseNotification>
-    )
+    );
 }

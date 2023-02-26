@@ -1,11 +1,10 @@
-import React from 'react';
+import React, {DetailedHTMLProps, InputHTMLAttributes} from 'react';
 
 
-type Props = React.InputHTMLAttributes<HTMLInputElement> & {
+type Props = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> & {
     label?: string;
     state: string;
-    setState: any;
-    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+    setState: (newValue: string) => void;
 }
 
 
@@ -25,5 +24,5 @@ export default function InputString({label, state, setState, onChange, ...props}
                 {...props}
             />
         </>
-    )
+    );
 }

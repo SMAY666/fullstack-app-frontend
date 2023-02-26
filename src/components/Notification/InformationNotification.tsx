@@ -16,5 +16,5 @@ export default function InformationNotification({data, index}: Props) {
         <BaseNotification borderColor="border-info" textColor="text-info" name={<AiOutlineInfoCircle className="mr-[5px]"/>} data={data} index={index}>
 
         </BaseNotification>
-    )
+    );
 }

@@ -1,15 +1,18 @@
 import React, {useEffect, useState} from 'react';
+import {AiOutlineFilter} from 'react-icons/ai';
+
 import {searchEvents} from '../api/events';
-import {useToken} from '../state/user/hooks';
+import EventsTable from '../components/EventsTable';
 import InputString from '../components/InputString';
 import {useChangeMustUpdateEvents, useMustUpdateEvents, useSetModal} from '../state/application/hooks';
 import {ModalType} from '../state/application/types';
-import EventsTable from '../components/EventsTable';
-import {AiOutlineFilter} from 'react-icons/ai';
+import {useToken} from '../state/user/hooks';
+import {OrganizationEvent} from '../types';
+import {getErrorMessage} from '../utils/error';
 
 
 export default function EventsPage() {
-    const [events, setEvents] = useState([]);
+    const [events, setEvents] = useState<OrganizationEvent[]>([]);
 
     const [errorMessage, setErrorMessage] = useState('');
     const [searchInput, setSearchInput] = useState('');
@@ -28,12 +31,12 @@ export default function EventsPage() {
 
         searchEvents(token, searchInput)
             .then(({data: events}) => {
-                setEvents(events);
+                setEvents(events as OrganizationEvent[]);
                 setErrorMessage('');
             })
             .catch((error) => {
-                setErrorMessage(error.message);
-            })
+                setErrorMessage(getErrorMessage(error));
+            });
     }, [searchInput, mustUpdateEvents]);
 
 
@@ -54,9 +57,9 @@ export default function EventsPage() {
                 </div>
             </header>
             <div className="mx-auto mt-[50px] mb-[50px]">
-                {events.length === 0 ? <span className="text-red-700">Событий нет</span> :
-                    errorMessage.length > 0 ? <span className="text-red-700">{errorMessage}</span> :
-                        <EventsTable events={events}/>}
+                {events.length === 0 ? <span className="text-red-700">Событий нет</span>
+                    : errorMessage.length > 0 ? <span className="text-red-700">{errorMessage}</span>
+                        : <EventsTable events={events}/>}
             </div>
         </main>
     );

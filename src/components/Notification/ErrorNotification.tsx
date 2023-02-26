@@ -16,5 +16,5 @@ export default function ErrorNotification({data, index}: Props) {
         <BaseNotification borderColor="border-error" textColor="text-error" name={<AiFillCloseCircle className="mr-[5px]"/>} data={data} index={index}>
 
         </BaseNotification>
-    )
+    );
 }

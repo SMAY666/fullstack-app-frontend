@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-
-import {login} from '../api'
-import InputString from '../components/InputString';
-
-import {useAuthorize, useExpirationTime, useIsAuthorized} from '../state/user/hooks';
 import {useNavigate} from 'react-router-dom';
+
+import {login} from '../api';
+import InputString from '../components/InputString';
+import {useAuthorize, useExpirationTime, useIsAuthorized} from '../state/user/hooks';
+import {getErrorMessage} from '../utils/error';
 
 
 export default function AuthorizationPage() {
@@ -18,13 +18,13 @@ export default function AuthorizationPage() {
     const onButtonClick = () => {
         login(loginInput, passwordInput)
             .then(({data: {token, expirationTime}}) => {
-                authorize(token, expirationTime);
+                authorize(token as string, expirationTime as number);
                 navigate('/');
             })
             .catch((error) => {
-                setErrorMessage(error.message);
+                setErrorMessage(getErrorMessage(error));
             });
-    }
+    };
 
     return (
         <section>
@@ -37,5 +37,5 @@ export default function AuthorizationPage() {
                 {errorMessage === '' ? null : <span className="text-red-700">{errorMessage}</span>}
             </div>
         </section>
-    )
+    );
 }

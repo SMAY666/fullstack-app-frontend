@@ -16,5 +16,5 @@ export default function SuccessNotification({data, index}: Props) {
         <BaseNotification borderColor="border-success" textColor="text-success" name={<><AiOutlineInfoCircle className="mr-[5px]"/></>} data={data} index={index}>
 
         </BaseNotification>
-    )
+    );
 }

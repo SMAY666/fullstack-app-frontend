@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {OrganizationEvent} from '../../types';
 import Event from './Event';
 
@@ -14,18 +15,18 @@ export default function EventsTable({events}: Props) {
         'Дата начала',
         'Дата окончания',
         'Статус',
-        'Действие'
-    ]
+        'Действие',
+    ];
 
     return (
         <table>
             <tbody>
-            <tr>
-                {titles.map((title, index) => <th className="px-[10px]" key={index}>{title}</th>)}
-            </tr>
-            {events.map((event, index) => <Event key={index} event={event}/>)}
+                <tr>
+                    {titles.map((title, index) => <th className="px-[10px]" key={index}>{title}</th>)}
+                </tr>
+                {events.map((event, index) => <Event key={index} event={event}/>)}
             </tbody>
         </table>
 
-    )
+    );
 }

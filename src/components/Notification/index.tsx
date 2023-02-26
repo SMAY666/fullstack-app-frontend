@@ -1,10 +1,11 @@
-import React from 'react'
+import React from 'react';
+
 import {useNotifications} from '../../state/application/hooks';
 import {NotificationType} from '../../state/application/types';
+import ErrorNotification from './ErrorNotification';
 import InformationNotification from './InformationNotification';
 import SuccessNotification from './SuccessNotification';
 import WarningNotification from './WarningNotification';
-import ErrorNotification from './ErrorNotification';
 
 
 export default function Notification() {
@@ -19,18 +20,18 @@ export default function Notification() {
                 notifications.map((notificationData, index) => {
                     switch (notificationData.type) {
                         case NotificationType.INFORMATION:
-                            return <InformationNotification key={notificationData.id} data={notificationData} index={index}/>
+                            return <InformationNotification key={notificationData.id} data={notificationData} index={index}/>;
                         case NotificationType.SUCCESS:
-                            return <SuccessNotification key={notificationData.id} data={notificationData} index={index}/>
+                            return <SuccessNotification key={notificationData.id} data={notificationData} index={index}/>;
                         case NotificationType.WARNING:
-                            return <WarningNotification key={notificationData.id} data={notificationData} index={index}/>
+                            return <WarningNotification key={notificationData.id} data={notificationData} index={index}/>;
                         case NotificationType.ERROR:
-                            return <ErrorNotification key={notificationData.id} data={notificationData} index={index}/>
+                            return <ErrorNotification key={notificationData.id} data={notificationData} index={index}/>;
                         default:
                             return null;
                     }
                 }).reverse()
             }
         </div>
-    )
+    );
 }

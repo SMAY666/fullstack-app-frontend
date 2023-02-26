@@ -1,14 +1,16 @@
 import './style.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './pages';
 import {Provider as ReduxProvider} from 'react-redux';
-import store from './state';
 import {BrowserRouter} from 'react-router-dom';
+
 import ErrorBoundary from './components/ErrorBoundary';
+import App from './pages';
+import store from './state';
 
 const root = ReactDOM.createRoot(
-    document.getElementById('root') as HTMLElement
+    document.getElementById('root')!,
 );
 root.render(
     <React.StrictMode>
@@ -19,6 +21,6 @@ root.render(
                 </BrowserRouter>
             </ReduxProvider>
         </ErrorBoundary>
-    </React.StrictMode>
+    </React.StrictMode>,
 );
 
