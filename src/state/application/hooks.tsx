@@ -1,7 +1,7 @@
 import {useCallback} from 'react';
 
 import {useAppDispatch, useAppSelector} from '../hooks';
-import {updateModal, addNotification, deleteNotification, changeMustUpdateEvents} from './reducer';
+import {addNotification, changeMustUpdateEvents, deleteNotification, updateModal} from './reducer';
 import {ModalType, NotificationData, NotificationType} from './types';
 
 

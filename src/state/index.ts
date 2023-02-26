@@ -13,9 +13,9 @@ const store = configureStore({
         user
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({ thunk: true })
-            .concat(save({ states: PERSISTED_KEYS, debounce: 1000 })),
-    preloadedState: load({ states: PERSISTED_KEYS, disableWarnings: true }),
+        getDefaultMiddleware({thunk: true})
+            .concat(save({states: PERSISTED_KEYS, debounce: 1000})),
+    preloadedState: load({states: PERSISTED_KEYS, disableWarnings: true}),
 });
 
 

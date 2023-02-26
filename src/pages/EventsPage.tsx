@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {fetchEvents, searchEvents} from '../api/events';
+import {searchEvents} from '../api/events';
 import {useToken} from '../state/user/hooks';
 import InputString from '../components/InputString';
 import {useChangeMustUpdateEvents, useMustUpdateEvents, useSetModal} from '../state/application/hooks';
