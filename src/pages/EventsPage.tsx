@@ -41,19 +41,23 @@ export default function EventsPage() {
 
 
     return (
-        <main className="flex flex-col">
-            <header className="px-[50px] py-[8px] top-0 fixed bg-white drop-shadow-lg rounded-2xl">
-                <div className="flex mx-auto">
+        <main className="flex-1 flex flex-col">
+            <header className="container top-0 fixed flex justify-center">
+                <div className="flex flex-row px-[50px] py-[8px] bg-white drop-shadow-lg rounded-2xl">
                     <button
                         className="py-[5px] px-[10px] border-2 rounded-md hover:text-blue-400 hover:border-blue-400 duration-300"
                         onClick={() => setModal(ModalType.CREATE_EVENT)}>Создать событие
                     </button>
                     <InputString
                         className="px-[10px] ml-[20px] w-[500px] border-b-2 outline-0 focus:border-blue-400 duration-300"
-                        type="text" placeholder="Поиск..." state={searchInput} setState={setSearchInput}
+                        type="text"
+                        placeholder="Поиск..."
+                        state={searchInput}
+                        setState={setSearchInput}
                     />
                     <button className="ml-[20px]"><AiOutlineFilter
-                        className="text-[20px] hover:text-blue-400 duration-300"/></button>
+                        className="text-[20px] hover:text-blue-400 duration-300"/>
+                    </button>
                 </div>
             </header>
             <div className="mx-auto mt-[50px] mb-[50px]">

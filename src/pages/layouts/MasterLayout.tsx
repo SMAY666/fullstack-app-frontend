@@ -6,11 +6,11 @@ import NavBar from '../../components/NavBar';
 
 export default function MasterLayout() {
     return (
-        <div className="flex w-full h-full">
-            <header className="fixed h-full">
-                <NavBar></NavBar>
+        <div className="flex-1 flex flex-row">
+            <header className="flex">
+                <NavBar/>
             </header>
-            <div className="mx-auto pt-[20px]">
+            <div className="flex-1 flex flex-col">
                 <Outlet/>
             </div>
         </div>
