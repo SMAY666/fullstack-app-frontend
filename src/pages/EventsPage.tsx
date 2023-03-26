@@ -24,15 +24,25 @@ export default function EventsPage() {
     const mustUpdateEvents = useMustUpdateEvents();
     const changeMustUpdateEvents = useChangeMustUpdateEvents();
 
+    const [loader, setLoader] = useState(false);
+    const [emptyEvents, setEmptyEvents] = useState(false);
+
     useEffect(() => {
+        setEmptyEvents(false);
+        setErrorMessage('');
+        setLoader(true);
         if (mustUpdateEvents) {
             changeMustUpdateEvents(false);
+            setLoader(false);
         }
 
         searchEvents(token, searchInput)
             .then(({data: events}) => {
+                if (events.length === 0) {
+                    setEmptyEvents(true);
+                }
                 setEvents(events as OrganizationEvent[]);
-                setErrorMessage('');
+                setLoader(false);
             })
             .catch((error) => {
                 setErrorMessage(getErrorMessage(error));
@@ -60,11 +70,21 @@ export default function EventsPage() {
                     </button>
                 </div>
             </header>
-            <div className="mx-auto mt-[50px] mb-[50px]">
-                {events.length === 0 ? <span className="text-red-700">Событий нет</span>
-                    : errorMessage.length > 0 ? <span className="text-red-700">{errorMessage}</span>
-                        : <EventsTable events={events}/>}
+            <div className="mx-auto mt-[100px] mb-[50px]">
+                {emptyEvents ? <span className='text-red-700'>Событий нет</span> : <EventsTable events={events}/>}
+                {errorMessage.length > 0 && <span className='text-red-700'>{errorMessage}</span>}
             </div>
+            {
+                loader && <div className='flex justify-center items-center'>
+                    <div
+                        className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid text-blue-400 border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                        role="status">
+                        <span
+                            className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+                        >Loading...</span>
+                    </div>
+                </div>
+            }
         </main>
     );
 }
