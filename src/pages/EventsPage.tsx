@@ -57,8 +57,8 @@ export default function EventsPage() {
 
     return (
         <main className="flex-1 flex flex-col">
-            <header className="container flex-row top-0 fixed justify-center bg-white drop-shadow-lg rounded-2xl">
-                <div className="flex flex-row px-[50px] py-[8px] justify-center">
+            <header className="bg-white drop-shadow-lg">
+                <div className="flex flex-row px-[50px] py-[8px] justify-center drop-shadow-lg">
                     <button
                         className="py-[5px] px-[10px] border-2 rounded-md hover:text-blue-400 hover:border-blue-400 duration-300"
                         onClick={() => setModal(ModalType.CREATE_EVENT)}>Создать событие
@@ -99,7 +99,7 @@ export default function EventsPage() {
                     </select>
                 </div>
             </header>
-            <div className="mx-auto mt-[150px] mb-[50px]">
+            <div className="mx-auto mt-[50px] mb-[50px]">
                 {emptyEvents ? <span className='text-red-700'>Событий нет</span> : <EventsTable events={events}/>}
                 {errorMessage.length > 0 && <span className='text-red-700'>{errorMessage}</span>}
             </div>
