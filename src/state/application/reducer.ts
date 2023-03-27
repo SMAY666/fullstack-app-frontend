@@ -34,7 +34,6 @@ const applicationSlice = createSlice({
             state.mastUpdateEvents = action.payload.mastUpdateEvents;
         },
         updateLoader(state, action) {
-            console.log(action.payload.loader);
             state.loader = action.payload.loader;
         },
     },
