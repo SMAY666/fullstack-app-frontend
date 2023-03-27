@@ -1,7 +1,7 @@
 import {useCallback} from 'react';
 
 import {useAppDispatch, useAppSelector} from '../hooks';
-import {addNotification, changeMustUpdateEvents, deleteNotification, updateModal} from './reducer';
+import {addNotification, changeMustUpdateEvents, deleteNotification, updateLoader, updateModal} from './reducer';
 import {ModalType, NotificationData, NotificationType} from './types';
 
 
@@ -15,6 +15,10 @@ export function useNotifications(): NotificationData[] {
 
 export function useMustUpdateEvents(): boolean {
     return useAppSelector((state) => state.application.mastUpdateEvents);
+}
+
+export function useLoader(): boolean {
+    return useAppSelector((state) => state.application.loader);
 }
 
 export function useSetModal() {
@@ -42,5 +46,12 @@ export function useChangeMustUpdateEvents() {
     const dispatch = useAppDispatch();
     return useCallback((mastUpdateEvents: boolean) => {
         dispatch(changeMustUpdateEvents({mastUpdateEvents}));
+    }, [dispatch]);
+}
+
+export function useUpdateLoader() {
+    const dispatch = useAppDispatch();
+    return useCallback((loader: boolean) => {
+        dispatch(updateLoader({loader}));
     }, [dispatch]);
 }

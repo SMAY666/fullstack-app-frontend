@@ -3,6 +3,7 @@ export type ApplicationState = {
     notifications: NotificationData[];
     nextId: number;
     mastUpdateEvents: boolean;
+    loader: boolean;
 };
 
 export enum ModalType {

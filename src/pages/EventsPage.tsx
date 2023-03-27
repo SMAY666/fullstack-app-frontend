@@ -1,10 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {AiOutlineFilter} from 'react-icons/ai';
 
 import {searchEvents} from '../api/events';
 import EventsTable from '../components/EventsTable';
 import InputString from '../components/InputString';
-import {useChangeMustUpdateEvents, useMustUpdateEvents, useSetModal} from '../state/application/hooks';
+import Loader from '../components/Loader';
+import {
+    useChangeMustUpdateEvents,
+    useLoader,
+    useMustUpdateEvents,
+    useSetModal,
+    useUpdateLoader,
+} from '../state/application/hooks';
 import {ModalType} from '../state/application/types';
 import {useToken} from '../state/user/hooks';
 import {OrganizationEvent} from '../types';
@@ -19,6 +25,7 @@ export default function EventsPage() {
     const [searchInput, setSearchInput] = useState('');
     const [dateFromInput, setDateFromInput] = useState('');
     const [dateToInput, setDateToInput] = useState('');
+    const [status, setStatus] = useState('Any');
 
 
     const token = useToken();
@@ -27,7 +34,9 @@ export default function EventsPage() {
     const mustUpdateEvents = useMustUpdateEvents();
     const changeMustUpdateEvents = useChangeMustUpdateEvents();
 
-    const [loader, setLoader] = useState(false);
+    const loader = useLoader();
+    const updateLoader = useUpdateLoader();
+
     const [emptyEvents, setEmptyEvents] = useState(false);
 
     const inputStyles = 'border-b-2 outline-0 text-[14px] focus:border-blue-400 duration-300';
@@ -35,19 +44,20 @@ export default function EventsPage() {
     useEffect(() => {
         setEmptyEvents(false);
         setErrorMessage('');
-        setLoader(true);
+        updateLoader(true);
+        // console.log(loader);
         if (mustUpdateEvents) {
             changeMustUpdateEvents(false);
-            setLoader(false);
+            updateLoader(false);
         }
 
-        searchEvents(token, searchInput)
+        searchEvents(token, searchInput, dateFromInput.toString(), dateToInput.toString(), status)
             .then(({data: events}) => {
                 if (events.length === 0) {
                     setEmptyEvents(true);
                 }
                 setEvents(events as OrganizationEvent[]);
-                setLoader(false);
+                updateLoader(false);
             })
             .catch((error) => {
                 setErrorMessage(getErrorMessage(error));
@@ -70,9 +80,6 @@ export default function EventsPage() {
                         state={searchInput}
                         setState={setSearchInput}
                     />
-                    <button className="ml-[20px]"><AiOutlineFilter
-                        className="text-[20px] hover:text-blue-400 duration-300"/>
-                    </button>
                 </div>
                 <div className='flex justify-center my-[10px]'>
                     <p>Дата от:</p>
@@ -92,10 +99,13 @@ export default function EventsPage() {
                         setState={setDateToInput}
                     />
                     <p>Статус:</p>
-                    <select className={'px-[2px] mx-[10px] '.concat(inputStyles)}>
-                        <option value="">Open</option>
-                        <option value="">Close</option>
-                        <option value="">In process</option>
+                    <select className={'px-[2px] mx-[10px] '.concat(inputStyles)} onChange={(event) => {
+                        setStatus(event.target.value);
+                    }}>
+                        <option value="Open">Open</option>
+                        <option value="Close">Close</option>
+                        <option value="InProcess">In process</option>
+                        <option value="Any">Любой</option>
                     </select>
                 </div>
             </header>
@@ -103,17 +113,7 @@ export default function EventsPage() {
                 {emptyEvents ? <span className='text-red-700'>Событий нет</span> : <EventsTable events={events}/>}
                 {errorMessage.length > 0 && <span className='text-red-700'>{errorMessage}</span>}
             </div>
-            {
-                loader && <div className='flex justify-center items-center'>
-                    <div
-                        className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid text-blue-400 border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                        role="status">
-                        <span
-                            className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-                        >Loading...</span>
-                    </div>
-                </div>
-            }
+            {loader && <Loader/>}
         </main>
     );
 }

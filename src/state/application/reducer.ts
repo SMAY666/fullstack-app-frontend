@@ -8,6 +8,7 @@ const initialState: ApplicationState = {
     notifications: [],
     nextId: 0,
     mastUpdateEvents: false,
+    loader: false,
 };
 
 const applicationSlice = createSlice({
@@ -32,9 +33,13 @@ const applicationSlice = createSlice({
         changeMustUpdateEvents(state, action) {
             state.mastUpdateEvents = action.payload.mastUpdateEvents;
         },
+        updateLoader(state, action) {
+            console.log(action.payload.loader);
+            state.loader = action.payload.loader;
+        },
     },
 });
 
 
-export const {updateModal, addNotification, deleteNotification, changeMustUpdateEvents} = applicationSlice.actions;
+export const {updateModal, addNotification, deleteNotification, changeMustUpdateEvents, updateLoader} = applicationSlice.actions;
 export default applicationSlice.reducer;
