@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import {searchEvents} from '../api/events';
+import {getEvents} from '../api/events';
 import EventsTable from '../components/EventsTable';
 import InputString from '../components/InputString';
 import Loader from '../components/Loader';
@@ -25,7 +25,7 @@ export default function EventsPage() {
     const [searchInput, setSearchInput] = useState('');
     const [dateFromInput, setDateFromInput] = useState('');
     const [dateToInput, setDateToInput] = useState('');
-    const [status, setStatus] = useState('Any');
+    const [status, setStatus] = useState('');
 
 
     const token = useToken();
@@ -41,17 +41,8 @@ export default function EventsPage() {
 
     const inputStyles = 'border-b-2 outline-0 text-[14px] focus:border-blue-400 duration-300';
 
-    useEffect(() => {
-        setEmptyEvents(false);
-        setErrorMessage('');
-        updateLoader(true);
-        // console.log(loader);
-        if (mustUpdateEvents) {
-            changeMustUpdateEvents(false);
-            updateLoader(false);
-        }
-
-        searchEvents(token, searchInput, dateFromInput.toString(), dateToInput.toString(), status)
+    const search = () => {
+        getEvents(token, searchInput, dateFromInput, dateToInput, status)
             .then(({data: events}) => {
                 if (events.length === 0) {
                     setEmptyEvents(true);
@@ -62,8 +53,22 @@ export default function EventsPage() {
             .catch((error) => {
                 setErrorMessage(getErrorMessage(error));
             });
-    }, [searchInput, mustUpdateEvents]);
+    };
 
+    useEffect(() => {
+        setEmptyEvents(false);
+        setErrorMessage('');
+        updateLoader(true);
+        if (mustUpdateEvents) {
+            changeMustUpdateEvents(false);
+            updateLoader(false);
+        }
+        search();
+    }, [searchInput, dateFromInput, dateToInput, status, mustUpdateEvents]);
+
+    useEffect(() => {
+        search();
+    }, []);
 
     return (
         <main className="flex-1 flex flex-col">
@@ -86,7 +91,6 @@ export default function EventsPage() {
                     <InputString
                         className={'px-[2px] mx-[10px] w-[100px] '.concat(inputStyles)}
                         type="Date"
-                        placeholder="Дата"
                         state={dateFromInput}
                         setState={setDateFromInput}
                     />
@@ -105,7 +109,7 @@ export default function EventsPage() {
                         <option value="Open">Open</option>
                         <option value="Close">Close</option>
                         <option value="InProcess">In process</option>
-                        <option value="Any">Любой</option>
+                        <option value="">Любой</option>
                     </select>
                 </div>
             </header>

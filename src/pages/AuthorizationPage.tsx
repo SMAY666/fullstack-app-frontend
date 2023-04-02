@@ -43,9 +43,22 @@ export default function AuthorizationPage() {
             <div className="container text-center my-52">
                 <header className="text-2xl">Добро пожаловать</header>
 
-                <InputString className="mt-8 outline-0 border-b-2 border-blue-300" type='text' placeholder='Логин' state={loginInput} setState={setLoginInput}/><br/>
-                <InputString className="mt-8 outline-0 border-b-2 border-blue-300" type='password' placeholder='Пароль' state={passwordInput} setState={setPasswordInput}/><br/>
-                <button className="mt-8 font-bold hover:text-blue-300 hover:duration-300" onClick={onButtonClick}>Войти</button><br/>
+                <InputString
+                    className="mt-8 outline-0 border-b-2 border-blue-300"
+                    type='text' placeholder='Логин'
+                    state={loginInput}
+                    setState={setLoginInput}/><br/>
+                <InputString
+                    className="mt-8 outline-0 border-b-2 border-blue-300"
+                    type='password'
+                    placeholder='Пароль'
+                    state={passwordInput}
+                    setState={setPasswordInput}/><br/>
+                <button
+                    className="mt-8 font-bold hover:text-blue-300 hover:duration-300"
+                    onClick={onButtonClick}>
+                    Войти
+                </button><br/>
                 {loader && <Loader/>}
             </div>
         </section>

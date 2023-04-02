@@ -15,8 +15,8 @@ export function createEvents(
     });
 }
 
-export function searchEvents(token: string, value: string, dateFrom: string, dateTo: string, status: string): Promise<any> {
-    return privateRequest('GET', `/api/events/search?value=${value}`, `${token}`);
+export function getEvents(token: string, value: string, dateFrom: string, dateTo: string, status: string): Promise<any> {
+    return privateRequest('GET', `/api/events/?value=${value}&dateFrom=${dateFrom}&dateTo=${dateTo}&status=${status}`, `${token}`);
 }
 
 export function deleteEvent(token: string, id: string): Promise<any> {
