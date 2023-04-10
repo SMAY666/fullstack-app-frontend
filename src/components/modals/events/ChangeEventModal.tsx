@@ -1,21 +1,54 @@
 import React, {useEffect, useState} from 'react';
 import {AiOutlineWarning} from 'react-icons/ai';
 
-import {useCurrentModalProps} from '../../../state/application/hooks';
+import {updateEvent} from '../../../api/events';
+import {
+    useAddNotification,
+    useChangeMustUpdateEvents,
+    useCurrentModalProps,
+    useSetModal,
+} from '../../../state/application/hooks';
+import {ModalType, NotificationType} from '../../../state/application/types';
+import {useToken} from '../../../state/user/hooks';
+import {getErrorMessage} from '../../../utils/error';
 import InputString from '../../InputString';
 import BaseModal from '../BaseModal';
 
 
 export default function ChangeEventModal() {
+    const token = useToken();
+    const changeMustUpdateEvents = useChangeMustUpdateEvents();
 
     const modalProps = useCurrentModalProps();
-    // console.log(new Date(modalProps.dateBegin.toString()).toLocaleDateString());
+    const setModal = useSetModal();
+    const addNotification = useAddNotification();
 
     const [titleInput, setTitleInput] = useState('');
     const [descriptionInput, setDescriptionInput] = useState('');
     const [dateBeginInput, setDateBeginInput] = useState('');
     const [dateEndInput, setDateEndInput] = useState('');
+    const [status, setStatus] = useState(modalProps.status);
 
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const applyChanges = () => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        updateEvent(token, modalProps.id, titleInput, descriptionInput, dateBeginInput, dateEndInput, status)
+            .then(() => {
+                setErrorMessage('');
+                setModal(ModalType.NONE);
+                changeMustUpdateEvents(true);
+                addNotification(
+                    NotificationType.SUCCESS,
+                    'Событие изменено',
+                    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+                    `${titleInput}<br>${descriptionInput}<br>Дата окончания: ${dateEndInput}<br>Статус: ${status}`);
+            })
+            .catch((error) => {
+                setErrorMessage(getErrorMessage(error));
+                addNotification(NotificationType.ERROR, 'Ошибка изменения', errorMessage);
+            });
+    };
     useEffect(() => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         setTitleInput(modalProps.title);
@@ -98,7 +131,8 @@ export default function ChangeEventModal() {
                 </p>
                 <p className="mb-[10px]">
                     Статус:
-                    <select name="" id="">
+                    <select name="" id="" onChange={(event) => setStatus(event.target.value)}>
+                        <option value={modalProps.status}>Текущий - {modalProps.status}</option>
                         <option value="Open">Open</option>
                         <option value="Close">Close</option>
                         <option value="In process">In process</option>
@@ -108,7 +142,7 @@ export default function ChangeEventModal() {
                 </p>
             </div>
             <div className="mt-[30px]">
-                <button className="float-right mr-[20px] border-2 border-blue-400 rounded-md px-[10px] py-[2px] text-blue-400 hover:bg-blue-300 hover:text-white duration-300">Изменить</button>
+                <button onClick={() => applyChanges()} className="float-right mr-[20px] border-2 border-blue-400 rounded-md px-[10px] py-[2px] text-blue-400 hover:bg-blue-300 hover:text-white duration-300">Изменить</button>
             </div>
         </BaseModal>
     );

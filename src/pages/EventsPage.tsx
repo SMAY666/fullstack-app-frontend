@@ -106,10 +106,10 @@ export default function EventsPage() {
                     <select className={'px-[2px] mx-[10px] '.concat(inputStyles)} onChange={(event) => {
                         setStatus(event.target.value);
                     }}>
+                        <option value="">Любой</option>
                         <option value="Open">Open</option>
                         <option value="Close">Close</option>
-                        <option value="InProcess">In process</option>
-                        <option value="">Любой</option>
+                        <option value="In process">In process</option>
                     </select>
                 </div>
             </header>

@@ -44,7 +44,7 @@ export default function Event({event}: Props) {
             <td className={event.description.length >= 30 ? 'w-[200px] border-r-[1px] py-[10px] px-[10px] text-justify text-xs' : 'w-[200px] border-r-[1px] py-[10px]'}>{event.description}</td>
             <td className="border-r-[1px] py-[10px]">{new Date(event.dateBegin).toLocaleDateString()}</td>
             <td className="border-r-[1px] py-[10px]">{new Date(event.dateEnd).toLocaleDateString()}</td>
-            <td className={event.status == 'Open' ? 'border-r-[1px] font-bold text-green-700' : event.status == 'Close' ? 'border-r-[1px] font-bold text-red-700' : 'border-r-[1px] font-bold'}>{event.status}</td>
+            <td className={event.status === 'Open' ? 'border-r-[1px] font-bold text-green-700' : event.status === 'Close' ? 'border-r-[1px] font-bold text-red-700' : 'border-r-[1px] font-bold'}>{event.status}</td>
             <td className="flex py-[20px] px-[20px]">
                 <button className="mx-auto" onClick={() => setModal(ModalType.UPDATE_EVENT, event)}><AiOutlineEdit className="text-blue-400 text-[20px] hover:text-green-500 duration-300"/></button>
                 <button className="mx-auto" onClick={() => onButtonClick(event.id)}><AiOutlineDelete className="text-blue-400 text-[20px] hover:text-red-600 duration-300"/></button>
