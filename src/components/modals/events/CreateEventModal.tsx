@@ -13,8 +13,8 @@ export default function CreateEventModal() {
 
     const [titleInput, setTitleInput] = useState('');
     const [descriptionInput, setDescriptionInput] = useState('');
-    const [dateBeginInput, setDateOfBeginInput] = useState('');
-    const [dateEndInput, setDateOfEndInput] = useState('');
+    const [dateBeginInput, setDateBeginInput] = useState('');
+    const [dateEndInput, setDateEndInput] = useState('');
 
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -86,7 +86,7 @@ export default function CreateEventModal() {
                     outline-0
                     focus:border-blue-400
                     focus:opacity-100
-                    duration-300" type="date" placeholder="Дата начала события" state={dateBeginInput} setState={setDateOfBeginInput}/>
+                    duration-300" type="date" placeholder="Дата начала события" state={dateBeginInput} setState={setDateBeginInput}/>
                 </p>
                 <p className="mb-[10px]">
                     Дата окончания:
@@ -101,7 +101,7 @@ export default function CreateEventModal() {
                     outline-0
                     focus:border-blue-400
                     focus:opacity-100
-                    duration-300" type="date" placeholder="Дата окончания события" state={dateEndInput} setState={setDateOfEndInput}/>
+                    duration-300" type="date" placeholder="Дата окончания события" state={dateEndInput} setState={setDateEndInput}/>
                 </p>
             </div>
             <p>{errorMessage.length > 0 ? <span className="text-red-700">{errorMessage}</span> : null}</p>

@@ -7,6 +7,7 @@ import Loader from '../components/Loader';
 import {useAddNotification, useLoader, useUpdateLoader} from '../state/application/hooks';
 import {NotificationType} from '../state/application/types';
 import {useAuthorize} from '../state/user/hooks';
+import {getErrorMessage} from '../utils/error';
 
 
 export default function AuthorizationPage() {
@@ -32,7 +33,7 @@ export default function AuthorizationPage() {
                 updateLoader(false);
                 addNotification(
                     NotificationType.ERROR,
-                    'Неверный логин или пароль',
+                    getErrorMessage(error),
                     '',
                 );
             });

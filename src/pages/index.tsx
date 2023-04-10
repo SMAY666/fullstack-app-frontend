@@ -6,7 +6,6 @@ import Notification from '../components/Notification';
 import {useIsAuthorized} from '../state/user/hooks';
 import MasterLayout from './layouts/MasterLayout';
 
-
 const MainPage = React.lazy(() => import('./MainPage'));
 const EventsPage = React.lazy(() => import('./EventsPage'));
 const AuthorizationPage = React.lazy(() => import('./AuthorizationPage'));

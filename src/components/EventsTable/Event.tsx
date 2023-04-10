@@ -1,9 +1,9 @@
 import React from 'react';
-import {AiOutlineDelete} from 'react-icons/ai';
+import {AiOutlineDelete, AiOutlineEdit} from 'react-icons/ai';
 
 import {deleteEvent} from '../../api/events';
-import {useAddNotification, useChangeMustUpdateEvents} from '../../state/application/hooks';
-import {NotificationType} from '../../state/application/types';
+import {useAddNotification, useChangeMustUpdateEvents, useSetModal} from '../../state/application/hooks';
+import {ModalType, NotificationType} from '../../state/application/types';
 import {useToken} from '../../state/user/hooks';
 import {OrganizationEvent} from '../../types';
 import {getErrorMessage} from '../../utils/error';
@@ -18,6 +18,7 @@ export default function Event({event}: Props) {
     const addNotification = useAddNotification();
 
     const changeMustUpdateEvents = useChangeMustUpdateEvents();
+    const setModal = useSetModal();
 
     const onButtonClick = (id: string) => {
         deleteEvent(token, id)
@@ -45,6 +46,7 @@ export default function Event({event}: Props) {
             <td className="border-r-[1px] py-[10px]">{new Date(event.dateEnd).toLocaleDateString()}</td>
             <td className={event.status == 'Open' ? 'border-r-[1px] font-bold text-green-700' : event.status == 'Close' ? 'border-r-[1px] font-bold text-red-700' : 'border-r-[1px] font-bold'}>{event.status}</td>
             <td className="flex py-[20px] px-[20px]">
+                <button className="mx-auto" onClick={() => setModal(ModalType.UPDATE_EVENT, event)}><AiOutlineEdit className="text-blue-400 text-[20px] hover:text-green-500 duration-300"/></button>
                 <button className="mx-auto" onClick={() => onButtonClick(event.id)}><AiOutlineDelete className="text-blue-400 text-[20px] hover:text-red-600 duration-300"/></button>
             </td>
         </tr>

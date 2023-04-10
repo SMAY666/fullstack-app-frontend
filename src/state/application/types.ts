@@ -3,6 +3,7 @@ export type ApplicationState = {
     notifications: NotificationData[];
     nextId: number;
     mastUpdateEvents: boolean;
+    props: any;
     loader: boolean;
 };
 
