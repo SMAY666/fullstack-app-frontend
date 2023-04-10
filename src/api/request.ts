@@ -7,7 +7,7 @@ function request(config: AxiosRequestConfig): Promise<any> {
     return axios.request(config);
 }
 
-export function privateRequest(method: 'GET' | 'POST' | 'DELETE', url: string, token: string, data?: any): Promise<any> {
+export function privateRequest(method: 'GET' | 'POST' | 'DELETE' | 'PATCH', url: string, token: string, data?: any): Promise<any> {
     return request({
         method,
         baseURL: SERVER_URL,
@@ -20,7 +20,7 @@ export function privateRequest(method: 'GET' | 'POST' | 'DELETE', url: string, t
     });
 }
 
-export function publicRequest(method: 'GET' | 'POST' | 'DELETE', url: string, data?: any): Promise<any> {
+export function publicRequest(method: 'GET' | 'POST' | 'DELETE' | 'PATCH', url: string, data?: any): Promise<any> {
     return request({
         method,
         baseURL: SERVER_URL,
