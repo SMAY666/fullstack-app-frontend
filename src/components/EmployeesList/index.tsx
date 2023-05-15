@@ -10,7 +10,7 @@ type Props = {
 
 export default function EmployeesList({employees}: Props) {
     return (
-        <div className='mt-[50px] ml-[50px]'>
+        <div className='mt-[50px] ml-[50px] flex'>
             {employees.map((employee, index) => <Employee key={index} employee={employee}/>)}
         </div>
     );

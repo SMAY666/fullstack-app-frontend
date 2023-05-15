@@ -10,7 +10,8 @@ export type ApplicationState = {
 export enum ModalType {
     NONE,
     CREATE_EVENT,
-    UPDATE_EVENT
+    UPDATE_EVENT,
+    CREATE_EMPLOYEE,
 }
 
 export enum NotificationType {
