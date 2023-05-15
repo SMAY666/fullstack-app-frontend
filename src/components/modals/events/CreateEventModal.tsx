@@ -26,7 +26,7 @@ export default function CreateEventModal() {
     const changeMustUpdateEvents = useChangeMustUpdateEvents();
 
     const onButtonClick = () => {
-        createEvents(token, titleInput, descriptionInput, (new Date(dateBeginInput)).getTime(), (new Date(dateEndInput)).getTime())
+        createEvents(token, titleInput, descriptionInput, (new Date(dateBeginInput).getTime()), (new Date(dateEndInput)).getTime())
             .then(() => {
                 setErrorMessage('');
                 setModal(ModalType.NONE);

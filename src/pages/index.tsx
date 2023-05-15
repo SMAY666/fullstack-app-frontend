@@ -4,6 +4,7 @@ import {Navigate, Route, Routes} from 'react-router-dom';
 import Modal from '../components/Modal';
 import Notification from '../components/Notification';
 import {useIsAuthorized} from '../state/user/hooks';
+import EmployeesPage from './EmployeesPage';
 import MasterLayout from './layouts/MasterLayout';
 
 const MainPage = React.lazy(() => import('./MainPage'));
@@ -26,7 +27,7 @@ function Routing() {
         <Routes>
             <Route element={<MasterLayout/>}>
                 <Route path='/' element={<EventsPage/>}/>
-                <Route path="*" element={<Navigate to='/'/>}/>
+                <Route path='/employees' element={<EmployeesPage/>}/>
             </Route>
         </Routes>
     );
