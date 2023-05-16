@@ -2,7 +2,7 @@ export type ApplicationState = {
     modal: ModalType;
     notifications: NotificationData[];
     nextId: number;
-    mastUpdateEvents: boolean;
+    mastUpdateComponent: boolean;
     props: any;
     loader: boolean;
 };

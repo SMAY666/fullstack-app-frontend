@@ -5,9 +5,9 @@ import EventsTable from '../components/EventsTable';
 import InputString from '../components/InputString';
 import Loader from '../components/Loader';
 import {
-    useChangeMustUpdateEvents,
+    useChangeMustUpdateComponent,
     useLoader,
-    useMustUpdateEvents,
+    useMustUpdateComponent,
     useSetModal,
     useUpdateLoader,
 } from '../state/application/hooks';
@@ -31,8 +31,8 @@ export default function EventsPage() {
     const token = useToken();
     const setModal = useSetModal();
 
-    const mustUpdateEvents = useMustUpdateEvents();
-    const changeMustUpdateEvents = useChangeMustUpdateEvents();
+    const mustUpdateComponent = useMustUpdateComponent();
+    const changeMustUpdateComponent = useChangeMustUpdateComponent();
 
     const loader = useLoader();
     const updateLoader = useUpdateLoader();
@@ -59,12 +59,12 @@ export default function EventsPage() {
         setEmptyEvents(false);
         setErrorMessage('');
         updateLoader(true);
-        if (mustUpdateEvents) {
-            changeMustUpdateEvents(false);
+        if (mustUpdateComponent) {
+            changeMustUpdateComponent(false);
             updateLoader(false);
         }
         search();
-    }, [searchInput, dateFromInput, dateToInput, status, mustUpdateEvents]);
+    }, [searchInput, dateFromInput, dateToInput, status, mustUpdateComponent]);
 
     useEffect(() => {
         search();

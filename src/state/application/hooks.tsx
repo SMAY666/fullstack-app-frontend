@@ -3,7 +3,7 @@ import {useCallback} from 'react';
 import {useAppDispatch, useAppSelector} from '../hooks';
 import {
     addNotification,
-    changeMustUpdateEvents,
+    changeMustUpdateComponent,
     deleteNotification,
     updateLoader,
     updateModal,
@@ -24,8 +24,8 @@ export function useNotifications(): NotificationData[] {
     return useAppSelector((state) => state.application.notifications);
 }
 
-export function useMustUpdateEvents(): boolean {
-    return useAppSelector((state) => state.application.mastUpdateEvents);
+export function useMustUpdateComponent(): boolean {
+    return useAppSelector((state) => state.application.mastUpdateComponent);
 }
 
 export function useLoader(): boolean {
@@ -54,10 +54,10 @@ export function useDeleteNotification() {
     }, [dispatch]);
 }
 
-export function useChangeMustUpdateEvents() {
+export function useChangeMustUpdateComponent() {
     const dispatch = useAppDispatch();
-    return useCallback((mastUpdateEvents: boolean) => {
-        dispatch(changeMustUpdateEvents({mastUpdateEvents}));
+    return useCallback((mastUpdateComponent: boolean) => {
+        dispatch(changeMustUpdateComponent({mastUpdateComponent}));
     }, [dispatch]);
 }
 

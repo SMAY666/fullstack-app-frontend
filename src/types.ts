@@ -22,3 +22,8 @@ export type OrganizationEmployee = {
         name: string;
     };
 }
+
+export type SystemRole = {
+    id: number,
+    name: string
+}

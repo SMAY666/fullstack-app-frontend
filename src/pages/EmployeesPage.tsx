@@ -3,7 +3,13 @@ import React, {useEffect, useState} from 'react';
 import {getEmployees} from '../api/employees';
 import EmployeesList from '../components/EmployeesList';
 import InputString from '../components/InputString';
-import {useSetModal} from '../state/application/hooks';
+import {
+    useLoader,
+    useMustUpdateComponent,
+    useSetModal,
+    useUpdateLoader,
+} from '../state/application/hooks';
+import {changeMustUpdateComponent} from '../state/application/reducer';
 import {ModalType} from '../state/application/types';
 import {useToken} from '../state/user/hooks';
 import {OrganizationEmployee} from '../types';
@@ -18,17 +24,27 @@ export default function EmployeesPage() {
     const [employees, setEmployees] = useState<OrganizationEmployee[]>([]);
 
     const setModal = useSetModal();
+    const loader = useLoader();
+    const updateLoader = useUpdateLoader();
+
+    const mustUpdateComponent = useMustUpdateComponent();
+    // const changeMustUpdateComponent = useChangeMustUpdateComponent();
 
 
-    useEffect(() => {
+    const search = () => {
         getEmployees(token)
             .then(({data: employees}) => {
                 setEmployees(employees as OrganizationEmployee[]);
-                console.log(employees);
             })
             .catch((error) => {
                 getErrorMessage(error);
             });
+    };
+
+    useEffect(() => {
+        {
+            search();
+        }
     }, []);
 
     const inputStyles = 'border-b-2 outline-0 text-[14px] focus:border-blue-400 duration-300';
@@ -50,7 +66,7 @@ export default function EmployeesPage() {
                 </div>
             </header>
 
-            <div>
+            <div className='mt-[20px]'>
                 <EmployeesList employees={employees}/>
             </div>
         </main>

@@ -4,7 +4,7 @@ import {AiOutlineWarning} from 'react-icons/ai';
 import {updateEvent} from '../../../api/events';
 import {
     useAddNotification,
-    useChangeMustUpdateEvents,
+    useChangeMustUpdateComponent,
     useCurrentModalProps,
     useSetModal,
 } from '../../../state/application/hooks';
@@ -17,7 +17,7 @@ import BaseModal from '../BaseModal';
 
 export default function ChangeEventModal() {
     const token = useToken();
-    const changeMustUpdateEvents = useChangeMustUpdateEvents();
+    const changeMustUpdateComponent = useChangeMustUpdateComponent();
 
     const modalProps = useCurrentModalProps();
     const setModal = useSetModal();
@@ -37,7 +37,7 @@ export default function ChangeEventModal() {
             .then(() => {
                 setErrorMessage('');
                 setModal(ModalType.NONE);
-                changeMustUpdateEvents(true);
+                changeMustUpdateComponent(true);
                 addNotification(
                     NotificationType.SUCCESS,
                     'Событие изменено',

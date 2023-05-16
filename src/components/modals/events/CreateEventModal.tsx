@@ -1,7 +1,11 @@
 import React, {useState} from 'react';
 
 import {createEvents} from '../../../api/events';
-import {useAddNotification, useChangeMustUpdateEvents, useSetModal} from '../../../state/application/hooks';
+import {
+    useAddNotification,
+    useChangeMustUpdateComponent,
+    useSetModal,
+} from '../../../state/application/hooks';
 import {ModalType, NotificationType} from '../../../state/application/types';
 import {useToken} from '../../../state/user/hooks';
 import {getErrorMessage} from '../../../utils/error';
@@ -23,7 +27,7 @@ export default function CreateEventModal() {
     const setModal = useSetModal();
 
     const addNotification = useAddNotification();
-    const changeMustUpdateEvents = useChangeMustUpdateEvents();
+    const changeMustUpdateComponent = useChangeMustUpdateComponent();
 
     const onButtonClick = () => {
         createEvents(token, titleInput, descriptionInput, (new Date(dateBeginInput).getTime()), (new Date(dateEndInput)).getTime())
@@ -35,7 +39,7 @@ export default function CreateEventModal() {
                     'Событие создано',
                     `${titleInput}<br>${descriptionInput}<br>Дата окончания: ${dateEndInput}`,
                 );
-                changeMustUpdateEvents(true);
+                changeMustUpdateComponent(true);
             })
             .catch((error) => setErrorMessage(getErrorMessage(error)));
     };

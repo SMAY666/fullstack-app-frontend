@@ -2,7 +2,7 @@ import React from 'react';
 import {AiOutlineDelete, AiOutlineEdit} from 'react-icons/ai';
 
 import {deleteEvent} from '../../api/events';
-import {useAddNotification, useChangeMustUpdateEvents, useSetModal} from '../../state/application/hooks';
+import {useAddNotification, useChangeMustUpdateComponent, useSetModal} from '../../state/application/hooks';
 import {ModalType, NotificationType} from '../../state/application/types';
 import {useToken} from '../../state/user/hooks';
 import {OrganizationEvent} from '../../types';
@@ -17,7 +17,7 @@ export default function Event({event}: Props) {
 
     const addNotification = useAddNotification();
 
-    const changeMustUpdateEvents = useChangeMustUpdateEvents();
+    const changeMustUpdateComponent = useChangeMustUpdateComponent();
     const setModal = useSetModal();
 
     const onButtonClick = (id: string) => {
@@ -28,7 +28,7 @@ export default function Event({event}: Props) {
                     'Событие успешно удалено',
                     event.title,
                 );
-                changeMustUpdateEvents(true);
+                changeMustUpdateComponent(true);
             })
             .catch((error) => {
                 addNotification(
