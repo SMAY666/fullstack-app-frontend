@@ -25,13 +25,14 @@ export default function NavBar() {
         navigate('/login');
     };
 
+
     return (
         <div className="relative top-0 left-0 bg-slate-100 w-[250px] h-[100vh] border-r-1">
             <header className="pt-[20px] mx-[50px] container font-bold text-blue-400">ООО &ldquo;Автопилот&rdquo;</header>
             <div className="container mt-[50px]">
                 {links.map((link, index) => (
                     <Link key={index} to={link.to}>
-                        <div className={location.pathname === link.to ? 'h-[50px] px-[10px] text-white bg-blue-300 font-bold' : '' + 'h-[50px] px-[10px] hover:bg-blue-300 hover:cursor-pointer hover:text-white hover:font-bold duration-300'}>
+                        <div className={location.pathname.startsWith(link.to + '/') || location.pathname === link.to ? 'h-[50px] px-[10px] text-white bg-blue-300 font-bold' : '' + 'h-[50px] px-[10px] hover:bg-blue-300 hover:cursor-pointer hover:text-white hover:font-bold duration-300'}>
                             <p className="pt-[10px]">{link.name}</p>
                         </div>
                     </Link>

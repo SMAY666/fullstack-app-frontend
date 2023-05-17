@@ -3,13 +3,14 @@ import React, {useEffect, useState} from 'react';
 import {getEmployees} from '../api/employees';
 import EmployeesList from '../components/EmployeesList';
 import InputString from '../components/InputString';
+import Loader from '../components/Loader';
 import {
+    useChangeMustUpdateComponent,
     useLoader,
     useMustUpdateComponent,
     useSetModal,
     useUpdateLoader,
 } from '../state/application/hooks';
-import {changeMustUpdateComponent} from '../state/application/reducer';
 import {ModalType} from '../state/application/types';
 import {useToken} from '../state/user/hooks';
 import {OrganizationEmployee} from '../types';
@@ -24,17 +25,18 @@ export default function EmployeesPage() {
     const [employees, setEmployees] = useState<OrganizationEmployee[]>([]);
 
     const setModal = useSetModal();
-    const loader = useLoader();
     const updateLoader = useUpdateLoader();
 
-    const mustUpdateComponent = useMustUpdateComponent();
-    // const changeMustUpdateComponent = useChangeMustUpdateComponent();
+    const loader = useLoader();
 
+    const changeMustUpdateComponent = useChangeMustUpdateComponent();
+    const mustUpdateComponent = useMustUpdateComponent();
 
     const search = () => {
         getEmployees(token)
             .then(({data: employees}) => {
                 setEmployees(employees as OrganizationEmployee[]);
+                updateLoader(false);
             })
             .catch((error) => {
                 getErrorMessage(error);
@@ -43,9 +45,18 @@ export default function EmployeesPage() {
 
     useEffect(() => {
         {
+            updateLoader(true);
+            changeMustUpdateComponent(false);
             search();
         }
     }, []);
+    useEffect(() => {
+        {
+            updateLoader(true);
+            changeMustUpdateComponent(false);
+            search();
+        }
+    }, [mustUpdateComponent]);
 
     const inputStyles = 'border-b-2 outline-0 text-[14px] focus:border-blue-400 duration-300';
     return (
@@ -68,6 +79,7 @@ export default function EmployeesPage() {
 
             <div className='mt-[20px]'>
                 <EmployeesList employees={employees}/>
+                {loader && <Loader/>}
             </div>
         </main>
     );

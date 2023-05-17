@@ -6,6 +6,7 @@ import Notification from '../components/Notification';
 import {useIsAuthorized} from '../state/user/hooks';
 import EmployeesPage from './EmployeesPage';
 import MasterLayout from './layouts/MasterLayout';
+import SelectedEmployeePage from './SelectedEmployeePage';
 
 const MainPage = React.lazy(() => import('./MainPage'));
 const EventsPage = React.lazy(() => import('./EventsPage'));
@@ -28,6 +29,7 @@ function Routing() {
             <Route element={<MasterLayout/>}>
                 <Route path='/' element={<EventsPage/>}/>
                 <Route path='/employees' element={<EmployeesPage/>}/>
+                <Route path='/employees/:id' element={<SelectedEmployeePage/>}/>
             </Route>
         </Routes>
     );

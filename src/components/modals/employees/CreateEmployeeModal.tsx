@@ -43,23 +43,31 @@ export default function CreateEmployeeModal() {
     }, []);
 
     const onButtonClick = () => {
-        createEmployee(token, fullName, dateOfBorn.toString(), post, +salary, +role, email, password)
-            .then(() => {
-                setModal(ModalType.NONE);
-                addNotification(
-                    NotificationType.SUCCESS,
-                    'Сотрудник создан',
-                    `${fullName}<br>${post}<br>ЗП: ${salary}`,
-                );
-                changeMustUpdateComponent(true);
-            })
-            .catch((error) => {
-                addNotification(
-                    NotificationType.ERROR,
-                    'Ошибка создания сотрудника',
-                    getErrorMessage(error),
-                );
-            });
+        if (password !== confirmPassword) {
+            addNotification(
+                NotificationType.ERROR,
+                'Пароли не совпадают',
+                '',
+            );
+        } else {
+            createEmployee(token, fullName, dateOfBorn.toString(), post, +salary, +role, email, password)
+                .then(() => {
+                    setModal(ModalType.NONE);
+                    addNotification(
+                        NotificationType.SUCCESS,
+                        'Сотрудник создан',
+                        `${fullName}<br>${post}<br>ЗП: ${salary}`,
+                    );
+                    changeMustUpdateComponent(true);
+                })
+                .catch((error) => {
+                    addNotification(
+                        NotificationType.ERROR,
+                        'Ошибка создания сотрудника',
+                        getErrorMessage(error),
+                    );
+                });
+        }
     };
 
     return (

@@ -15,6 +15,7 @@ export type OrganizationEmployee = {
     dateOfBorn: number;
     post: string;
     salary: number;
+    description: string;
     email: string;
     passwordHash: string;
     role: {

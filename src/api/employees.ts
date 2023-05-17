@@ -22,3 +22,11 @@ export function createEmployee(token: string, fullName: string, dateOfBorn: stri
 export function getEmployees(token: string): Promise<any> {
     return privateRequest('GET', '/api/employees/', token);
 }
+
+export function getEmployeeById(token: string, id: string): Promise<any> {
+    return privateRequest('GET', `/api/employees/employee?id=${id}`, token);
+}
+
+export function deleteEmployee(token: string, id: number): Promise<any> {
+    return privateRequest('DELETE', `/api/employees/delete?id=${id}`, token);
+}
