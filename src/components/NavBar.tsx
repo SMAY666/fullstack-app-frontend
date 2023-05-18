@@ -1,7 +1,12 @@
-import React from 'react';
+import jwtDecode from 'jwt-decode';
+import React, {useEffect, useState} from 'react';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 
-import {useDeauthorize} from '../state/user/hooks';
+import {getEmployeeById} from '../api/employees';
+import {useAddNotification} from '../state/application/hooks';
+import {NotificationType} from '../state/application/types';
+import {useDeauthorize, useToken, useUserId} from '../state/user/hooks';
+import {getErrorMessage} from '../utils/error';
 
 type LinkData = {
     name: string;
@@ -20,11 +25,33 @@ export default function NavBar() {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const userId = useUserId();
+
+    const token = useToken();
+    const addNotification = useAddNotification();
+
+    const [userName, setUserName] = useState('');
+
     const onButtonClick = () => {
         deauthorize();
         navigate('/login');
     };
 
+
+    useEffect(() => {
+        getEmployeeById(token, userId.toString())
+            .then(({data: user}) => {
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+                setUserName(user?.firstName.concat(' ', user?.middleName));
+            })
+            .catch((error) => {
+                addNotification(
+                    NotificationType.ERROR,
+                    'Возникла ошибка',
+                    getErrorMessage(error),
+                );
+            });
+    }, [userId]);
 
     return (
         <div className="relative top-0 left-0 bg-slate-100 w-[250px] h-[100vh] border-r-1">
@@ -47,7 +74,7 @@ export default function NavBar() {
                             alt=""
                             className="w-[50px] h-[50px] rounded-full"
                         />
-                        <p className="pl-[10px] ml-[50px] -mt-[25px]">Сазонов Матвей</p>
+                        <p className="pl-[10px] ml-[50px] -mt-[25px]">{userName}</p>
                     </Link>
                 </div>
                 <button className="pl-[10px] mt-[20px] hover:text-red-600 hover:font-bold duration-300" onClick={onButtonClick}>Выйти</button>

@@ -5,6 +5,7 @@ import {UserState} from './types';
 
 const initialState: UserState = {
     token: '',
+    userId: 0,
     expirationTime: 0,
 };
 
@@ -15,6 +16,9 @@ const userSlice = createSlice({
         updateToken(state, action) {
             state.token = action.payload.token;
         },
+        updateUserId(state, action) {
+            state.userId = action.payload.userId;
+        },
         updateExpirationTime(state, action) {
             state.expirationTime = action.payload.expirationTime;
         },
@@ -22,5 +26,5 @@ const userSlice = createSlice({
 });
 
 
-export const {updateToken, updateExpirationTime} = userSlice.actions;
+export const {updateToken, updateUserId, updateExpirationTime} = userSlice.actions;
 export default userSlice.reducer;
