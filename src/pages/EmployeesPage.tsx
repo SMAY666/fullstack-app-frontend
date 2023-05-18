@@ -24,6 +24,7 @@ export default function EmployeesPage() {
     const [searchInput, setSearchInput] = useState('');
     const [employees, setEmployees] = useState<OrganizationEmployee[]>([]);
 
+
     const setModal = useSetModal();
     const updateLoader = useUpdateLoader();
 
@@ -33,7 +34,7 @@ export default function EmployeesPage() {
     const mustUpdateComponent = useMustUpdateComponent();
 
     const search = () => {
-        getEmployees(token)
+        getEmployees(token, searchInput)
             .then(({data: employees}) => {
                 setEmployees(employees as OrganizationEmployee[]);
                 updateLoader(false);
@@ -56,7 +57,7 @@ export default function EmployeesPage() {
             changeMustUpdateComponent(false);
             search();
         }
-    }, [mustUpdateComponent]);
+    }, [mustUpdateComponent, searchInput]);
 
     const inputStyles = 'border-b-2 outline-0 text-[14px] focus:border-blue-400 duration-300';
     return (
