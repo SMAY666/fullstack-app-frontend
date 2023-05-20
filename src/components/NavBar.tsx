@@ -1,4 +1,3 @@
-import jwtDecode from 'jwt-decode';
 import React, {useEffect, useState} from 'react';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 
@@ -6,19 +5,25 @@ import {getEmployeeById} from '../api/employees';
 import {useAddNotification} from '../state/application/hooks';
 import {NotificationType} from '../state/application/types';
 import {useDeauthorize, useToken, useUserId} from '../state/user/hooks';
+import {OrganizationEmployee} from '../types';
 import {getErrorMessage} from '../utils/error';
 
 type LinkData = {
     name: string;
     to: string;
+    accessRole: number[];
+    style: string;
 }
 
 export default function NavBar() {
+    const [linkStyle, setLinkStyle] = useState('h-[50px] px-[10px] hover:bg-blue-300 hover:cursor-pointer hover:text-white hover:font-bold duration-300');
+    const selectedLink = 'bg-blue-300 text-white font-bold';
+
     const links: LinkData[] = [
-        {name: 'Ближайшие события', to: '/'},
-        {name: 'Документы', to: '/documents'},
-        {name: 'Сотрудники', to: '/employees'},
-        {name: 'Клиенты', to: '/lids'},
+        {name: 'Ближайшие события', to: '/', accessRole: [1, 2, 3, 4, 5, 6, 7], style: linkStyle},
+        {name: 'Документы', to: '/documents', accessRole: [1, 5, 6, 7], style: linkStyle},
+        {name: 'Сотрудники', to: '/employees', accessRole: [1, 4], style: linkStyle},
+        {name: 'Клиенты', to: '/lids', accessRole: [1, 5], style: linkStyle},
     ];
 
     const deauthorize = useDeauthorize();
@@ -27,10 +32,13 @@ export default function NavBar() {
 
     const userId = useUserId();
 
+    const [user, setUser] = useState<OrganizationEmployee>();
+
     const token = useToken();
     const addNotification = useAddNotification();
 
     const [userName, setUserName] = useState('');
+
 
     const onButtonClick = () => {
         deauthorize();
@@ -43,6 +51,7 @@ export default function NavBar() {
             .then(({data: user}) => {
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                 setUserName(user?.firstName.concat(' ', user?.middleName));
+                setUser(user as OrganizationEmployee);
             })
             .catch((error) => {
                 addNotification(
@@ -51,7 +60,8 @@ export default function NavBar() {
                     getErrorMessage(error),
                 );
             });
-    }, [userId]);
+    }, [userId, location.pathname]);
+
 
     return (
         <div className="relative top-0 left-0 bg-slate-100 w-[250px] h-[100vh] border-r-1">
@@ -59,7 +69,9 @@ export default function NavBar() {
             <div className="container mt-[50px]">
                 {links.map((link, index) => (
                     <Link key={index} to={link.to}>
-                        <div className={location.pathname.startsWith(link.to + '/') || location.pathname === link.to ? 'h-[50px] px-[10px] text-white bg-blue-300 font-bold' : '' + 'h-[50px] px-[10px] hover:bg-blue-300 hover:cursor-pointer hover:text-white hover:font-bold duration-300'}>
+                        <div className={user && link.accessRole.indexOf(user.role.id) !== 1
+                            ? location.pathname.startsWith(link.to + '/') || location.pathname === link.to
+                                ? link.style.concat(' text-white bg-blue-300') : link.style : 'hidden'}>
                             <p className="pt-[10px]">{link.name}</p>
                         </div>
                     </Link>

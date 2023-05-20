@@ -1,19 +1,21 @@
 import React, {useEffect, useState} from 'react';
 
+import {getEmployeeById} from '../api/employees';
 import {getEvents} from '../api/events';
 import EventsTable from '../components/EventsTable';
 import InputString from '../components/InputString';
 import Loader from '../components/Loader';
 import {
+    useAddNotification,
     useChangeMustUpdateComponent,
     useLoader,
     useMustUpdateComponent,
     useSetModal,
     useUpdateLoader,
 } from '../state/application/hooks';
-import {ModalType} from '../state/application/types';
-import {useToken} from '../state/user/hooks';
-import {OrganizationEvent} from '../types';
+import {ModalType, NotificationType} from '../state/application/types';
+import {useToken, useUserId} from '../state/user/hooks';
+import {OrganizationEmployee, OrganizationEvent} from '../types';
 import {getErrorMessage} from '../utils/error';
 
 
@@ -30,6 +32,10 @@ export default function EventsPage() {
 
     const token = useToken();
     const setModal = useSetModal();
+    const userId = useUserId();
+
+    const [user, setUser] = useState<OrganizationEmployee>();
+    const addNotification = useAddNotification();
 
     const mustUpdateComponent = useMustUpdateComponent();
     const changeMustUpdateComponent = useChangeMustUpdateComponent();
@@ -40,6 +46,8 @@ export default function EventsPage() {
     const [emptyEvents, setEmptyEvents] = useState(false);
 
     const inputStyles = 'border-b-2 outline-0 text-[14px] focus:border-blue-400 duration-300';
+    const buttonStyle = 'py-[5px] px-[10px] border-2 rounded-md hover:text-blue-400 hover:border-blue-400 duration-300';
+    const buttonAccess = [1, 2, 4];
 
     const search = () => {
         getEvents(token, searchInput, dateFromInput, dateToInput, status)
@@ -63,6 +71,17 @@ export default function EventsPage() {
             changeMustUpdateComponent(false);
             updateLoader(false);
         }
+        getEmployeeById(token, userId.toString())
+            .then(({data: user}) => {
+                setUser(user as OrganizationEmployee);
+            })
+            .catch((error) => {
+                addNotification(
+                    NotificationType.ERROR,
+                    'Возникла ошибка',
+                    getErrorMessage(error),
+                );
+            });
         search();
     }, [searchInput, dateFromInput, dateToInput, status, mustUpdateComponent]);
 
@@ -75,7 +94,7 @@ export default function EventsPage() {
             <header className="bg-white drop-shadow-lg">
                 <div className="flex flex-row px-[50px] py-[8px] justify-center drop-shadow-lg">
                     <button
-                        className="py-[5px] px-[10px] border-2 rounded-md hover:text-blue-400 hover:border-blue-400 duration-300"
+                        className={user && buttonAccess.indexOf(user.role.id) !== -1 ? buttonStyle : 'hidden'}
                         onClick={() => setModal(ModalType.CREATE_EVENT)}>Создать событие
                     </button>
                     <InputString

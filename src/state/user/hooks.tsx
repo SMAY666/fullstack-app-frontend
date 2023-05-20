@@ -13,7 +13,6 @@ export function useIsAuthorized(): boolean {
 export function useAuthorize() {
     const dispatch = useAppDispatch();
     return useCallback((token: string, expirationTime: number) => {
-        console.log(token);
         dispatch(updateToken({token}));
 
         dispatch(updateUserId({userId: jwtDecode<Token>(token).userId}));
