@@ -6,7 +6,7 @@ export function createEmployee(token: string, fullName: string, dateOfBorn: stri
     const middleName = fullNameSplit[1];
     const lastName = fullNameSplit[2];
 
-    return privateRequest('POST', '/api/employees/register', token, {
+    return privateRequest('POST', '/api/employees/register', {
         firstName,
         middleName,
         lastName,
@@ -16,23 +16,22 @@ export function createEmployee(token: string, fullName: string, dateOfBorn: stri
         roleId,
         email,
         passwordHash,
-    });
+    }, token);
 }
 
 export function getEmployees(token: string, name: string): Promise<any> {
-    return privateRequest('GET', `/api/employees/?name=${name}`, token);
+    return privateRequest('GET', '/api/employees/', {name}, token);
 }
 
 export function getEmployeeById(token: string, id: string): Promise<any> {
-    return privateRequest('GET', `/api/employees/employee?id=${id}`, token);
+    return privateRequest('GET', '/api/employees/employee', {id}, token);
 }
 
 export function deleteEmployee(token: string, id: number): Promise<any> {
-    return privateRequest('DELETE', `/api/employees/delete?id=${id}`, token);
+    return privateRequest('DELETE', '/api/employees/delete', {id}, token);
 }
 export function updateEmployee(token: string, id: number, post: string, roleId: number, salary: number, description: string): Promise<any> {
-    console.log(id, post, roleId, salary, description);
-    return privateRequest('PATCH', `/api/employees/${id}`, token, {
+    return privateRequest('PATCH', `/api/employees/${id}`, undefined, token, {
         id,
         post,
         roleId,

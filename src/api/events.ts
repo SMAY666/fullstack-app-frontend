@@ -1,26 +1,44 @@
 import {privateRequest} from './request';
 
-export function createEvents(
+export function createEvents(token: string, data: {
+                                 title: string,
+                                 description: string,
+                                 dateBegin: number,
+                                 dateEnd: number,
+                                 issuedFor?: number,
+                             },
+): Promise<any> {
+    return privateRequest('POST', '/api/events/create', undefined, `${token}`, data);
+}
+
+export function getEvents(
     token: string,
+    value?: string,
+    dateFrom?: string,
+    dateTo?: string,
+    status?: string,
+    issuedFor?: number,
+): Promise<any> {
+    const url = '/api/events';
+    return privateRequest('GET', url, {
+        value,
+        dateFrom,
+        dateTo,
+        status,
+        issuedFor,
+    }, token);
+}
+
+export function updateEvent(
+    token: string,
+    id: number,
     title: string,
     description: string,
-    dateBegin: number,
-    dateEnd: number,
+    dateBegin: string,
+    dateEnd: string,
+    status: string,
 ): Promise<any> {
-    return privateRequest('POST', '/api/events/create', `${token}`, {
-        title,
-        description,
-        dateBegin,
-        dateEnd,
-    });
-}
-
-export function getEvents(token: string, value: string, dateFrom: string, dateTo: string, status: string): Promise<any> {
-    return privateRequest('GET', `/api/events/?value=${value}&dateFrom=${dateFrom}&dateTo=${dateTo}&status=${status}`, `${token}`);
-}
-
-export function updateEvent(token: string, id: number, title: string, description: string, dateBegin: string, dateEnd: string, status: string): Promise<any> {
-    return privateRequest('PATCH', `/api/events/${id}/update`, `${token}`, {
+    return privateRequest('PATCH', `/api/events/${id}/update`, undefined, token, {
         id,
         title,
         description,
@@ -31,5 +49,5 @@ export function updateEvent(token: string, id: number, title: string, descriptio
 }
 
 export function deleteEvent(token: string, id: string): Promise<any> {
-    return privateRequest('DELETE', `/api/events/delete?id=${id}`, `${token}`);
+    return privateRequest('DELETE', '/api/events/delete', {id}, `${token}`);
 }

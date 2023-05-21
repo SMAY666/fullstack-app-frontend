@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
 
 import {createEvents} from '../../../api/events';
 import {
@@ -29,8 +30,17 @@ export default function CreateEventModal() {
     const addNotification = useAddNotification();
     const changeMustUpdateComponent = useChangeMustUpdateComponent();
 
+
     const onButtonClick = () => {
-        createEvents(token, titleInput, descriptionInput, (new Date(dateBeginInput).getTime()), (new Date(dateEndInput)).getTime())
+        // eslint-disable-next-line no-restricted-globals
+        const params = location.pathname.split('/');
+        createEvents(token, {
+            title: titleInput,
+            description: descriptionInput,
+            dateBegin: (new Date(dateBeginInput).getTime()),
+            dateEnd: (new Date(dateEndInput)).getTime(),
+            issuedFor: params[2] ? +params[2] : undefined,
+        })
             .then(() => {
                 setErrorMessage('');
                 setModal(ModalType.NONE);

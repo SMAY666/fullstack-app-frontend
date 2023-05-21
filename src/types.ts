@@ -5,6 +5,9 @@ export type OrganizationEvent = {
     dateBegin: number;
     dateEnd: number;
     status: 'Open' | 'Close' | 'In Process';
+    issuedFor: {
+        id: number;
+    }
 }
 
 export type OrganizationEmployee = {

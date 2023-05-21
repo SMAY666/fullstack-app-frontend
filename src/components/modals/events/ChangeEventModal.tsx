@@ -43,6 +43,7 @@ export default function ChangeEventModal() {
                     'Событие изменено',
                     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
                     `${titleInput}<br>${descriptionInput}<br>Дата окончания: ${dateEndInput}<br>Статус: ${status}`);
+                changeMustUpdateComponent(true);
             })
             .catch((error) => {
                 setErrorMessage(getErrorMessage(error));

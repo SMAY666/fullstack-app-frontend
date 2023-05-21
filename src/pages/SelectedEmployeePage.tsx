@@ -3,12 +3,19 @@ import {AiOutlineDelete, AiOutlineEdit} from 'react-icons/ai';
 import {useNavigate, useParams} from 'react-router-dom';
 
 import {deleteEmployee, getEmployeeById, updateEmployee} from '../api/employees';
+import {getEvents} from '../api/events';
 import {getAllRoles} from '../api/roles';
+import EventsTable from '../components/EventsTable';
 import InputString from '../components/InputString';
-import {useAddNotification, useChangeMustUpdateComponent, useMustUpdateComponent} from '../state/application/hooks';
-import {NotificationType} from '../state/application/types';
+import {
+    useAddNotification,
+    useChangeMustUpdateComponent,
+    useMustUpdateComponent,
+    useSetModal,
+} from '../state/application/hooks';
+import {ModalType, NotificationType} from '../state/application/types';
 import {useToken} from '../state/user/hooks';
-import {OrganizationEmployee, SystemRole} from '../types';
+import {OrganizationEmployee, OrganizationEvent, SystemRole} from '../types';
 import {getErrorMessage} from '../utils/error';
 
 
@@ -35,6 +42,10 @@ export default function SelectedEmployeePage() {
     const changeMustUpdateComponent = useChangeMustUpdateComponent();
     const mustUpdateComponent = useMustUpdateComponent();
 
+    const setModal = useSetModal();
+
+    const [events, setEvents] = useState<OrganizationEvent[]>();
+
     const inputStyles = 'border-b-2 outline-0 text-[14px] focus:border-blue-400 duration-300';
 
     const openCloseRedactor = () => {
@@ -53,8 +64,29 @@ export default function SelectedEmployeePage() {
 
     };
 
+    const fetchEvents = () => {
+        if (id) {
+            getEvents(token, '', '', '', '', +id)
+                .then(({data: events}) => {
+                    setEvents(events as OrganizationEvent[]);
+                    console.log(events);
+                })
+                .catch((error) => {
+                    addNotification(
+                        NotificationType.ERROR,
+                        'Что-то пошло не так',
+                        '',
+                    );
+                });
+        }
+    };
+
     useEffect(() => {
-        setDescription(`Паспорт серия ${passportSeries} номер ${passportNumber}<br>Адрес прописки: ${residenceAddress}`);
+        fetchEvents();
+    }, []);
+
+    useEffect(() => {
+        setDescription(`Паспорт серия ${passportSeries} номер ${passportNumber} \n  Адрес прописки: ${residenceAddress}`);
     }, [passportSeries, passportNumber, residenceAddress]);
 
     useEffect(() => {
@@ -68,11 +100,12 @@ export default function SelectedEmployeePage() {
                     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                     setSalary(employee?.salary);
                     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                    // setRoleId(employee?.role.id);
+                    setRoleId(employee?.role.id);
                     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                     setEmployeeFullName(employee.firstName.concat(' ', employee.middleName, ' ', employee.lastName));
                     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                     setDescription(employee?.description);
+                    fetchEvents();
                 })
                 .catch((error) => {
                     getErrorMessage(error);
@@ -81,6 +114,7 @@ export default function SelectedEmployeePage() {
             navigate('/employees');
         }
     }, [mustUpdateComponent]);
+
 
     const saveChange = () => {
         if (employee?.id) {
@@ -128,10 +162,11 @@ export default function SelectedEmployeePage() {
             }
         }
     };
+
     return (
         <main className='container grid'>
             <div className='justify-between mt-[50px]'>
-                <div className='flex flex-col float-left ml-[20px]'>
+                <div className='flex flex-col float-left ml-[20px] w-[500px]'>
                     <div className='flex'>
                         <p className='font-bold text-[30px]'>{employeeFullName}</p>
                         <button className="mx-[10px]" onClick={() => openCloseRedactor()}><AiOutlineEdit className={isRedacting ? 'text-green-500 text-[20px]' : 'text-blue-400 text-[20px] hover:text-green-500 duration-300'}/></button>
@@ -160,11 +195,17 @@ export default function SelectedEmployeePage() {
                             </p>
                         </div>}</div>
                     </div>
+                    <div className="w-[150px] mt-[20px]">
+                        {events && <EventsTable events={events}></EventsTable>}
+                    </div>
                 </div>
+
+
                 <div className='float-right mr-[20px]'>
                     <img className='w-[300px] h-[300px]' src="https://ob-kassa.ru/content/front/buhoskol_tmp1/images/reviews-icon.jpg" alt="Фото профиля"/>
                     <button
-                        className="mt-[20px] mx-auto py-[5px] px-[10px] border-2 rounded-md hover:text-blue-400 hover:border-blue-400 duration-300">Создать персональную задачу
+                        className="mt-[20px] mx-auto py-[5px] px-[10px] border-2 rounded-md hover:text-blue-400 hover:border-blue-400 duration-300"
+                        onClick={() => setModal(ModalType.CREATE_EVENT)}>Создать персональную задачу
                     </button>
                 </div>
             </div>
