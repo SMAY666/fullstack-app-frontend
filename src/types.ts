@@ -21,10 +21,18 @@ export type OrganizationEmployee = {
     description: string;
     email: string;
     passwordHash: string;
-    role: {
-        id: number;
-        name: string;
-    };
+    role: SystemRole;
+}
+
+export type OrganizationCustomer = {
+    id: string;
+    fullName: string;
+    phoneNumber: string;
+    email: string;
+    type: string;
+    description: string;
+    assignedEmployee: OrganizationEmployee;
+    documentsCount: number
 }
 
 export type SystemRole = {

@@ -19,7 +19,7 @@ export function createEmployee(token: string, fullName: string, dateOfBorn: stri
     }, token);
 }
 
-export function getEmployees(token: string, name: string): Promise<any> {
+export function getEmployees(token: string, name?: string): Promise<any> {
     return privateRequest('GET', '/api/employees/', {name}, token);
 }
 
